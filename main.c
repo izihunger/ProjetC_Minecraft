@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-
-// Structure for the linked list : START
+// Structure : START
 typedef struct Bloc
 {
     char display;
@@ -10,7 +9,7 @@ typedef struct Bloc
     int drop;
     int spawnable;
 }Bloc;
-// Structure for the linked list : END
+// Structure : END
 
 // Function to create the menu : START
 int menu(){
@@ -58,7 +57,7 @@ Bloc** generateMap(int size){
 // Function to generate the map : END
 
 void showMap(Bloc ** map, int size){
-    //system("cls");
+    system("cls");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             printf("%c ", map[i][j].display);
@@ -67,24 +66,14 @@ void showMap(Bloc ** map, int size){
     }
 }
 
-// Function main
 int main(){
-    int value = menu();
-    if(value == 1){
-        int size;
-        printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
-        scanf("%d", &size);
-        Bloc ** map = generateMap(size);
-        showMap(map, size);
-        /*fflush(stdout);
-        char c = _getch();
-        printf("%c", c);*/
-    }
-    else if(value == 2){
-        //TODO
-        return 0;
-    }
-    else if(value == 3){
-        return 0;
-    }
+    int size;
+    printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
+    scanf("%d", &size);
+    Bloc ** map = generateMap(size);
+    showMap(map, size);
+    /*fflush(stdout);
+    char c = _getch();
+    printf("%c", c);*/
+    return 0;
 }
