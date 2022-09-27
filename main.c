@@ -8,7 +8,7 @@ typedef struct Bloc
     int crossable;
     int spawnable;
     int breakable;
-    Item item;
+    //Item item;
 }Bloc;
 
 typedef struct Item
@@ -19,7 +19,7 @@ typedef struct Item
 
 const Item i_dirt = {'d'};
 const Item i_stone = {'d'};
-const Item i_ = {'d'};
+const Item i_wood = {'d'};
 
 const Bloc Dirt = {'d', 1, 1, 1};
 const Bloc Stone = {'s', 1, 1, 1};
@@ -84,13 +84,13 @@ void displayMap(Bloc ** map, int size){
 
 int main(){
     Bloc ** map = NULL;
-    int value = menu();
+    int value = displayMenu();
     if(value == 1){
         int size;
         printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
         scanf("%d", &size);
         map = generateMap(size);
-        showMap(map, size);
+        displayMap(map, size);
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/
