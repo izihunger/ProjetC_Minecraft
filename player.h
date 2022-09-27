@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -13,3 +16,5 @@ typedef struct Player {
 
 // Function : START
 void movePlayer(char c);
+
+#endif

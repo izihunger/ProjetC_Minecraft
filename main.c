@@ -1,31 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
-
-// Structure : START
-typedef struct Bloc
-{
-    char display;
-    int crossable;
-    int spawnable;
-    int breakable;
-    //Item item;
-}Bloc;
-
-typedef struct Item
-{
-    char display;
-}Item;
-// Structure : END
-
-const Item i_dirt = {'d'};
-const Item i_stone = {'d'};
-const Item i_wood = {'d'};
-
-const Bloc Dirt = {'d', 1, 1, 1};
-const Bloc Stone = {'s', 1, 1, 1};
-const Bloc Tree = {'t', 0, 1, 0};
-const Bloc Water = {'w', 1, 1, 1};
-
+# include "map.h"
 
 // Function to create the menu : START
 int displayMenu(){
@@ -50,39 +25,7 @@ int displayMenu(){
     else return 0;
 }
 // Function to create the menu : END
-
-// Function to generate the map : START
-Bloc** createGrid(int size){
-    Bloc ** map = (Bloc**) malloc(size * sizeof(Bloc*));
-    for (int i = 0; i < size; i++)
-    {
-        map[i] = (Bloc*) malloc(size * sizeof(Bloc));
-    }
-    return map;
-}
-
-Bloc** generateMap(int size){
-    Bloc ** map = createGrid(size);
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
-            map[i][j].display = 'd';
-        }
-    }
-    return map;
-}
-// Function to generate the map : END
-
-void displayMap(Bloc ** map, int size){
-    system("cls");
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
-            printf("%c ", map[i][j].display);
-        }
-        printf("\n");
-    }
-}
-
-int main(){
+void game(){
     Bloc ** map = NULL;
     int value = displayMenu();
     if(value == 1){
@@ -97,10 +40,12 @@ int main(){
     }
     else if(value == 2){
         //TODO
-        return 0;
     }
     else if(value == 3){
-        return 0;
     }
+}
+
+int main(){
+    game();
     return 0;
 }
