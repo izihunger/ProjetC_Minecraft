@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 
 
 // Structure for the linked list : START
@@ -12,6 +11,30 @@ typedef struct Bloc
     int spawnable;
 }Bloc;
 // Structure for the linked list : END
+
+// Function to create the menu : START
+int menu(){
+    printf("Welcome to the game !\n");
+    printf("Choose your option :\n\n");
+    printf("1. Start a new game\n");
+    printf("2. Load a game\n");
+    printf("3. Exit\n\n");
+    
+    int choice;
+    scanf("%d", &choice);
+
+    if(choice == 1){
+        return 1;
+    }
+    else if(choice == 2){
+        return 2;
+    }
+    else if(choice == 3){
+        return 3;
+    }
+    else return 0;
+}
+// Function to create the menu : END
 
 // Function to generate the map : START
 Bloc** createGrid(int size){
@@ -35,7 +58,7 @@ Bloc** generateMap(int size){
 // Function to generate the map : END
 
 void showMap(Bloc ** map, int size){
-    system("cls");
+    //system("cls");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             printf("%c ", map[i][j].display);
@@ -44,14 +67,24 @@ void showMap(Bloc ** map, int size){
     }
 }
 
+// Function main
 int main(){
-    int size;
-    printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
-    scanf("%d", &size);
-    Bloc ** map = generateMap(size);
-    showMap(map, size);
-    /*fflush(stdout);
-    char c = _getch();
-    printf("%c", c);*/
-    return 0;
+    int value = menu();
+    if(value == 1){
+        int size;
+        printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
+        scanf("%d", &size);
+        Bloc ** map = generateMap(size);
+        showMap(map, size);
+        /*fflush(stdout);
+        char c = _getch();
+        printf("%c", c);*/
+    }
+    else if(value == 2){
+        //TODO
+        return 0;
+    }
+    else if(value == 3){
+        return 0;
+    }
 }
