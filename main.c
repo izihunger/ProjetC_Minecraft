@@ -6,13 +6,29 @@ typedef struct Bloc
 {
     char display;
     int crossable;
-    int drop;
     int spawnable;
+    int breakable;
+    Item item;
 }Bloc;
+
+typedef struct Item
+{
+    char display;
+}Item;
 // Structure : END
 
+const Item i_dirt = {'d'};
+const Item i_stone = {'d'};
+const Item i_ = {'d'};
+
+const Bloc Dirt = {'d', 1, 1, 1};
+const Bloc Stone = {'s', 1, 1, 1};
+const Bloc Tree = {'t', 0, 1, 0};
+const Bloc Water = {'w', 1, 1, 1};
+
+
 // Function to create the menu : START
-int menu(){
+int displayMenu(){
     printf("Welcome to the game !\n");
     printf("Choose your option :\n\n");
     printf("1. Start a new game\n");
@@ -56,7 +72,7 @@ Bloc** generateMap(int size){
 }
 // Function to generate the map : END
 
-void showMap(Bloc ** map, int size){
+void displayMap(Bloc ** map, int size){
     system("cls");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -67,13 +83,24 @@ void showMap(Bloc ** map, int size){
 }
 
 int main(){
-    int size;
-    printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
-    scanf("%d", &size);
-    Bloc ** map = generateMap(size);
-    showMap(map, size);
-    /*fflush(stdout);
-    char c = _getch();
-    printf("%c", c);*/
+    Bloc ** map = NULL;
+    int value = menu();
+    if(value == 1){
+        int size;
+        printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
+        scanf("%d", &size);
+        map = generateMap(size);
+        showMap(map, size);
+        /*fflush(stdout);
+        char c = _getch();
+        printf("%c", c);*/
+    }
+    else if(value == 2){
+        //TODO
+        return 0;
+    }
+    else if(value == 3){
+        return 0;
+    }
     return 0;
 }
