@@ -1,6 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
-# include "map.h"
+# include "player.h"
 
 // Function to create the menu : START
 int displayMenu(){
@@ -43,6 +43,7 @@ void game(){
     }
     else if(value == 3){
     }
+    free(map);
 }
 
 int main(){
