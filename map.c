@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[33md", 1, 1, 1};
-const Bloc Stone = {1, "\033[37ms", 1, 1, 1};
-const Bloc Tree = {2, "\033[32mt", 0, 1, 0};
-const Bloc Water = {3, "\033[34mw", 1, 1, 1};
+const Bloc Dirt = {0, "\033[31m#", 1, 1, 1};
+const Bloc Stone = {1, "\033[37m#", 1, 1, 1};
+const Bloc Water = {2, "\033[34m~", 1, 1, 1};
+const Bloc Tree = {3, "\033[32mT", 0, 1, 0};
 
 // Function to generate the map : START
 Bloc** createGrid(int size){
@@ -18,7 +17,41 @@ Bloc** createGrid(int size){
     return map;
 }
 
-Bloc chooseBloc(int r){
+Bloc chooseBloc(Bloc ** map, int i, int j, int size){
+    int r;
+    if(i == 0 && j == 0)
+        r = rand() % 4;
+    else if(map[i][j-1].id == 0){
+        printf("Last is dirt\n");
+        r = rand() % 100;
+        printf("Pourcentage : %d\n", r);
+        if(r >= 0 && r < 40) r = 0;
+        else if(r >= 40 && r < 65) r = 1;
+        else if(r >= 65 && r < 90) r = 2;
+        else r = 3;
+    }
+    else if(map[i][j-1].id == 1){
+        printf("Last is stone\n");
+        r = rand() % 100;
+        printf("Pourcentage : %d\n", r);
+        if(r >= 0 && r < 40) r = 0;
+        else r = 1;
+    }
+    else if(map[i][j-1].id == 2){
+        printf("Last is water\n");
+        r = rand() % 100;
+        printf("Pourcentage : %d\n", r);
+        if(r >= 0 && r < 35) r = 0;
+        else r = 2;
+    }
+    else if(map[i][j-1].id == 3){
+        printf("Last is tree\n");
+        r = rand() % 100;
+        printf("Pourcentage : %d\n", r);
+        if(r >= 0 && r < 70) r = 0;
+        else r = 3;
+    }
+    printf("%d\n", r);
     switch (r)
     {
     case 0:
@@ -26,21 +59,20 @@ Bloc chooseBloc(int r){
     case 1:
         return Stone;
     case 2:
-        return Tree;
-    case 3:
         return Water;
+    case 3:
+        return Tree;
     default:
         break;
     }
 }
 
 Bloc** generateMap(int size){
-    srand(time(NULL));
     Bloc ** map = createGrid(size);
+    srand(time(NULL));
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            int r = rand() % 4;
-            map[i][j] = chooseBloc(r);
+            map[i][j] = chooseBloc(map, i, j, size);
         }
     }
     return map;

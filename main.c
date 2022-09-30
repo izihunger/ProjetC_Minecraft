@@ -47,6 +47,7 @@ void game(){
 }
 
 int main(){
+    printf("Hello there: \U0001F600\n");
     game();
     return 0;
 }
