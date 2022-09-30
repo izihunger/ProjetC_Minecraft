@@ -10,6 +10,7 @@ typedef struct Bloc
     int crossable;
     int spawnable;
     int breakable;
+    int playerOn;
     //Item item;
 }Bloc;
 

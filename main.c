@@ -27,13 +27,12 @@ int displayMenu(){
 // Function to create the menu : END
 void game(){
     Bloc ** map = NULL;
+    int size;
     int value = displayMenu();
     if(value == 1){
-        int size;
         printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
         scanf("%d", &size);
         map = generateMap(size);
-        displayMap(map, size);
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/
@@ -42,6 +41,13 @@ void game(){
         //TODO
     }
     else if(value == 3){
+    }
+    spawPlayer(map, size);
+    displayMap(map, size);
+    char c;
+    while(scanf(" %c", &c) == 1){
+        movePlayer(map, c);
+        displayMap(map, size);
     }
     free(map);
 }

@@ -16,6 +16,7 @@ typedef struct Player {
 // Structure : END
 
 // Function : START
-void movePlayer(char c);
+void movePlayer(Bloc ** map, char c);
+void spawPlayer(Bloc ** map, int size);
 
 #endif
