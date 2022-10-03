@@ -63,7 +63,7 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size){
     case 3:
         return Tree;
     default:
-        break;
+        return Dirt;
     }
 }
 
@@ -80,7 +80,7 @@ Bloc** generateMap(int size){
 // Function to generate the map : END
 
 void displayMap(Bloc ** map, int size){
-    //system("cls");
+    system("cls");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[33mP ");
@@ -88,5 +88,5 @@ void displayMap(Bloc ** map, int size){
         }
         printf("\n");
     }
-    printf("\n");
+    printf("\nCommandes :\n\'z\' pour monter\n\'s\' pour descendre\n\'q\' pour aller a gauche\n\'d\' pour aller a gauche\n\nEntrez votre commande : ");
 }

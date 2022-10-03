@@ -1,5 +1,4 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,5 +17,3 @@ typedef struct Player {
 // Function : START
 void movePlayer(Bloc ** map, char c);
 void spawPlayer(Bloc ** map, int size);
-
-#endif
