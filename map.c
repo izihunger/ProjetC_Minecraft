@@ -88,5 +88,5 @@ void displayMap(Bloc ** map, int size){
         }
         printf("\n");
     }
-    printf("\nCommandes :\n\'z\' pour monter\n\'s\' pour descendre\n\'q\' pour aller a gauche\n\'d\' pour aller a gauche\n\nEntrez votre commande : ");
+    printf("\nCommandes :\n\'z\' pour monter\n\'s\' pour descendre\n\'q\' pour aller a gauche\n\'d\' pour aller a gauche\n\'e\' pour exit le jeu\n\nEntrez votre commande : ");
 }

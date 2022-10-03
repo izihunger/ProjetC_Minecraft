@@ -45,7 +45,7 @@ void game(){
     spawPlayer(map, size);
     displayMap(map, size);
     char c;
-    while(scanf(" %c", &c) == 1){
+    while(scanf(" %c", &c) == 1 && c != 'e'){
         movePlayer(map, c);
         displayMap(map, size);
     }
@@ -53,7 +53,6 @@ void game(){
 }
 
 int main(){
-    printf("Hello there: \U0001F600\n");
     game();
     return 0;
 }
