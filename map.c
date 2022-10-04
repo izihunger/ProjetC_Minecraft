@@ -98,7 +98,7 @@ Bloc ** loadMap(int size){
             switch (j)
             {
             case 0:
-                liste[i].id = (int)c;
+                liste[i].id = c-48;
                 break;
             case 1:
                 *s = c;
@@ -108,41 +108,43 @@ Bloc ** loadMap(int size){
                 *s = '\0';
                 s = disp;
                 strcpy(liste[i].display, (char*) disp);
-                liste[i].crossable = (int)c; 
+                liste[i].crossable = c-48; 
                 break;
             case 3:
-                liste[i].spawnable = (int)c;
+                liste[i].spawnable = c-48;
                 break;
             case 4:
-                liste[i].breakable = (int)c;
+                liste[i].breakable = c-48;
                 break;
             case 5:
-                liste[i].movable = (int)c;
+                liste[i].movable = c-48;
                 break;
             case 6:
-                liste[i].playerOn = (int)c;
+                liste[i].playerOn = c-48;
                 break;
             default:
                 break;
             }
-            //printf("%c",c); 
         }
     }
-    for(i = 0; i < size*size; i++){
-        printf("%s", liste[i].display);
-    }
-    /*for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
-            map[i][j] = Dirt;
-            //map[i][j] = chooseBloc(map, i, j, size);
+    int indexe = 0;
+    for(i = 0; i < size; i++){
+        for(j = 0; j < size; j++){
+            map[i][j].id = liste[indexe].id;
+            map[i][j].breakable = liste[indexe].breakable;
+            map[i][j].crossable = liste[indexe].crossable;
+            map[i][j].movable = liste[indexe].movable;
+            map[i][j].playerOn = liste[indexe].playerOn;
+            strcpy(map[i][j].display, liste[indexe].display);
+            indexe++;
         }
-    }*/
+    }
     fclose(file);
     return map;
 }
 
 void displayMap(Bloc ** map, int size){
-    system("cls");
+    //system("cls");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[33mP ");

@@ -9,7 +9,7 @@ const Bloc Tree = {3, "\033[32mT", 0, 0, 0, 0};
 
 Player player = {"default", 0, 50, 0, 0};
 
-void spawPlayer(Bloc ** map,int size){
+void spawnPlayer(Bloc ** map,int size){
     int i, j;
     do{
         i = rand() % size;
@@ -18,6 +18,11 @@ void spawPlayer(Bloc ** map,int size){
     player.posX = j;
     player.posY = i;
     map[i][j].playerOn = 1;
+}
+
+void setPos(int x, int y){
+    player.posX = x;
+    player.posY = y;
 }
 
 void movePlayer(Bloc ** map, char c){

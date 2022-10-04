@@ -17,6 +17,7 @@ typedef struct Player {
 
 // Function : START
 void movePlayer(Bloc ** map, char c);
-void spawPlayer(Bloc ** map, int size);
+void spawnPlayer(Bloc ** map, int size);
+void setPos(int x, int y);
 void setPlayerName(char name[]);
 void actionBlocPlayer(Bloc ** map);

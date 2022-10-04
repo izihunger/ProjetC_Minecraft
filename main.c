@@ -66,16 +66,22 @@ void game(){
         scanf("%s", game.playerName);
         setPlayerName(game.playerName);
         game.map = generateMap(game.size);
+        spawnPlayer(game.map, game.size);
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/
     }
     else if(value == 2){
-        game.map = loadMap(20);
+        game.size = 20;
+        game.map = loadMap(game.size);
+        for(int i = 0; i < game.size; i++){
+            for(int j = 0; j < game.size; j++){
+                if(game.map[i][j].playerOn == 1) setPos(j, i);
+            }
+        }
     }
     else if(value == 3){
     }
-    spawPlayer(game.map, game.size);
     displayMap(game.map, game.size);
     char c;
     while(scanf(" %c", &c) == 1 && c != 'e'){
