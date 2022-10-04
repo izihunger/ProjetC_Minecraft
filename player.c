@@ -48,3 +48,6 @@ void movePlayer(Bloc ** map, char c){
         break;
     }
 }
+void setPlayerName(char * name){
+    player.name = name;
+}

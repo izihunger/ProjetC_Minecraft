@@ -6,7 +6,7 @@
 
 // Structure : START
 typedef struct Player {
-    char name[20];
+    char * name;
     int level;
     int posX;
     int posY;
@@ -17,3 +17,4 @@ typedef struct Player {
 // Function : START
 void movePlayer(Bloc ** map, char c);
 void spawPlayer(Bloc ** map, int size);
+void setPlayerName(char name[]);

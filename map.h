@@ -9,6 +9,7 @@ typedef struct Bloc
     int crossable;
     int spawnable;
     int breakable;
+    int movable;
     int playerOn;
     //Item item;
 }Bloc;
@@ -16,4 +17,5 @@ typedef struct Bloc
 Bloc** createGrid(int size);
 Bloc chooseBloc(Bloc ** map, int i, int j, int size);
 Bloc** generateMap(int size);
+Bloc ** loadMap(int size);
 void displayMap(Bloc ** map, int size);

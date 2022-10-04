@@ -2,8 +2,17 @@
 # include <stdlib.h>
 # include "player.h"
 
-// Function to create the menu : START
-int displayMenu(){
+typedef struct gameStatut
+{
+    Bloc ** map;
+    int size;
+    int difficulty;
+    char playerName[20];
+}gameStatut;
+
+
+// Function to create the start menu : START
+int displayStartMenu(){
     printf("Welcome to the game !\n");
     printf("Choose your option :\n\n");
     printf("1. Start a new game\n");
@@ -24,32 +33,59 @@ int displayMenu(){
     }
     else return 0;
 }
-// Function to create the menu : END
+
+void displayMenu(gameStatut game){
+    system("cls");
+    printf("Welcome to the menu !\n");
+    printf("Choose your option :\n\n");
+    printf("1. Save\n");
+    printf("2. Change difficulty\n");
+    printf("3. Exit\n\n");
+    int choice;
+    scanf("%d", &choice);
+    if(choice == 1){
+        FILE * file = fopen("Save.txt", "w");
+        //fprintf(file, "%d\n", game.size);
+        for(int i = 0; i < game.size; i++){
+            for(int j = 0; j < game.size; j++){
+                fprintf(file, "%d;%s;%d;%d;%d;%d;%d\n", game.map[i][j].id, game.map[i][j].display, game.map[i][j].crossable,\
+                game.map[i][j].spawnable, game.map[i][j].breakable, game.map[i][j].movable, game.map[i][j].playerOn);
+            }
+        }
+        fclose(file);
+    }
+}
+// Function to create the start menu : END
 void game(){
-    Bloc ** map = NULL;
-    int size;
-    int value = displayMenu();
+    gameStatut game;
+    int value = displayStartMenu();
     if(value == 1){
         printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
-        scanf("%d", &size);
-        map = generateMap(size);
+        scanf("%d", &game.size);
+        printf("Entrez votre nom de joueur : ");
+        scanf("%s", game.playerName);
+        setPlayerName(game.playerName);
+        game.map = generateMap(game.size);
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/
     }
     else if(value == 2){
-        //TODO
+        game.map = loadMap(20);
     }
     else if(value == 3){
     }
-    spawPlayer(map, size);
-    displayMap(map, size);
+    spawPlayer(game.map, game.size);
+    displayMap(game.map, game.size);
     char c;
     while(scanf(" %c", &c) == 1 && c != 'e'){
-        movePlayer(map, c);
-        displayMap(map, size);
+        if(c == 'm') displayMenu(game);
+        else{
+            movePlayer(game.map, c);
+            displayMap(game.map, game.size);
+        }
     }
-    free(map);
+    free(game.map);
 }
 
 int main(){
