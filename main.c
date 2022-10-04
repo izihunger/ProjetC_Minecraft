@@ -44,6 +44,19 @@ void displayMenu(gameStatut game){
     int choice;
     scanf("%d", &choice);
     if(choice == 1){
+        printf("Enter the path where you want to save : ");
+        char path[255];
+        scanf("%s", path);
+        char * c = path;
+        while(*c){
+            c++;
+        }
+        char * txt = "save.txt";
+        for(int i = 0; i < strlen(txt); i++){
+            *c = txt[i];
+            c++;
+        }
+        printf("%s", path);
         FILE * file = fopen("Save.txt", "w");
         //fprintf(file, "%d\n", game.size);
         for(int i = 0; i < game.size; i++){
@@ -67,6 +80,7 @@ void game(){
         setPlayerName(game.playerName);
         game.map = generateMap(game.size);
         spawnPlayer(game.map, game.size);
+        printf("oui");
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/

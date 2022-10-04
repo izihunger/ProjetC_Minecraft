@@ -57,7 +57,7 @@ void movePlayer(Bloc ** map, char c){
         }
         break;
     case 't':
-        actionBlocPlayer(map);
+        //actionBlocPlayer(map);
         break;
     default:
         break;
