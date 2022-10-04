@@ -85,26 +85,30 @@ Bloc ** loadMap(int size){
     Bloc * liste = (Bloc*) malloc(size*size*sizeof(Bloc));
     FILE * file = fopen("Save.txt", "r");
     char c;
+    char disp[255];
+    char *s = disp;
     while((c=fgetc(file))!=EOF){
         if(c == '\n'){
             i ++;
             j = 0;
+            s = disp;
         }
-        if(c == ';') j++;
+        else if(c == ';') j++;
         else {
-            char * disp;
             switch (j)
             {
             case 0:
                 liste[i].id = (int)c;
                 break;
             case 1:
-                disp += c;
+                *s = c;
+                s++;
                 break;
             case 2:
-                liste[i].display = disp;
-                disp = "";
-                liste[i].crossable = (int)c;
+                *s = '\0';
+                s = disp;
+                strcpy(liste[i].display, (char*) disp);
+                liste[i].crossable = (int)c; 
                 break;
             case 3:
                 liste[i].spawnable = (int)c;
@@ -121,7 +125,7 @@ Bloc ** loadMap(int size){
             default:
                 break;
             }
-            printf("%c",c); 
+            //printf("%c",c); 
         }
     }
     for(i = 0; i < size*size; i++){

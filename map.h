@@ -1,11 +1,12 @@
 #pragma once
 
 #include <time.h>
+#include <string.h>
 
 typedef struct Bloc
 {
     int id;
-    char * display;
+    char display[255];
     int crossable;
     int spawnable;
     int breakable;
