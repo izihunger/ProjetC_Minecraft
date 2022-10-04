@@ -8,6 +8,7 @@
 typedef struct Player {
     char * name;
     int level;
+    int hp;
     int posX;
     int posY;
 } Player;
@@ -18,3 +19,4 @@ typedef struct Player {
 void movePlayer(Bloc ** map, char c);
 void spawPlayer(Bloc ** map, int size);
 void setPlayerName(char name[]);
+void actionBlocPlayer(Bloc ** map);
