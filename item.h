@@ -3,7 +3,10 @@
 
 typedef struct Item
 {
-    char display;
+    int id;
+    char name[255];
+    int quantity;
+    int quantityMax;
 }Item;
 
 extern const Item i_dirt;         

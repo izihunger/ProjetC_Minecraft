@@ -7,6 +7,8 @@ const Bloc Stone = {1, "\033[37m#", 1, 1, 0, 0, 0, 0};
 const Bloc Water = {2, "\033[34m~", 0, 0, 0, 0, 0, 0};
 const Bloc Tree = {3, "\033[32mT", 0, 0, 1, 0, 0, 0};
 
+Chest * chest;
+
 // Function to generate the map : START
 Bloc** createGrid(int size){
     Bloc ** map = (Bloc**) malloc(size * sizeof(Bloc*));
@@ -69,13 +71,27 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size){
 
 Bloc** generateMap(int size){
     Bloc ** map = createGrid(size);
+    int nbCoffres = 0;
     srand(time(NULL));
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             map[i][j] = chooseBloc(map, i, j, size);
             if(map[i][j].id == 0){
                 int r = rand() % 100;
-                if(r <= 2) map[i][j].chest = 1;
+                if(r <= 2){
+                    map[i][j].chest = 1;
+                    nbCoffres ++;
+                }
+            }
+        }
+    }
+    chest = (Chest*) malloc(nbCoffres * sizeof(Chest));
+    int k = 0;
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            if(map[i][j].chest){
+                chest[k].posX = j;
+                chest[k].posX = i;
             }
         }
     }
