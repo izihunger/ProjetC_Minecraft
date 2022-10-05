@@ -171,6 +171,7 @@ void displayMap(Bloc ** map, int size){
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[33mP ");
+            if(map[i][j].mobOn) printf("\033[33mM ");
             else printf("%s ", map[i][j].display);
         }
         printf("\n");
