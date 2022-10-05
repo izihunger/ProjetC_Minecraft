@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[31m#", 1, 1, 0, 0, 0};
-const Bloc Stone = {1, "\033[37m#", 1, 1, 0, 0, 0};
-const Bloc Water = {2, "\033[34m~", 0, 0, 0, 0, 0};
-const Bloc Tree = {3, "\033[32mT", 0, 0, 1, 0, 0};
+const Bloc Dirt = {0, "\033[31m#", 1, 1, 0, 0, 0, 0};
+const Bloc Stone = {1, "\033[37m#", 1, 1, 0, 0, 0, 0};
+const Bloc Water = {2, "\033[34m~", 0, 0, 0, 0, 0, 0};
+const Bloc Tree = {3, "\033[32mT", 0, 0, 1, 0, 0, 0};
 
 // Function to generate the map : START
 Bloc** createGrid(int size){
@@ -73,6 +73,7 @@ Bloc** generateMap(int size){
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             map[i][j] = chooseBloc(map, i, j, size);
+            printf("%d, %d.", i, j);
         }
     }
     return map;

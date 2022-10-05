@@ -12,6 +12,7 @@ typedef struct Bloc
     int breakable;
     int movable;
     int playerOn;
+    int mobOn;
     //Item item;
 }Bloc;
 
