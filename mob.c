@@ -64,7 +64,7 @@ void moveMob(Bloc ** map, Player player, int size){
     }
     else{ // Si le joueur est à plus de 20 blocs du mob (déplacement aléatoire du mob)
         srand(time(NULL));
-        int a = rand() % 3; // Choix aléatoire de la direction du mob
+        int a = rand() % 4; // Choix aléatoire de la direction du mob
         switch (a)
         {
         case 0: // Déplacement vers le haut

@@ -93,6 +93,7 @@ Bloc** generateMap(int size){
                 chest[k].posX = j;
                 chest[k].posX = i;
                 fillChest(&chest[k]);
+                k++;
             }
         }
     }
@@ -214,14 +215,13 @@ void displayMap(Bloc ** map, int size){
 }
 
 void fillChest(Chest * chest){
-    srand(time(NULL));
-    int r1 = rand() % 2;
+    int r1 = rand() % 3;
     Item item;
     item = selectItem(r1);
     chest->items[0] = item;
     int r2;
     do{
-        r2 = rand() % 2;
+        r2 = rand() % 3;
     }while(r2 == r1);
     item = selectItem(r2);
     chest->items[1] = item;
