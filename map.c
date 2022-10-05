@@ -73,6 +73,10 @@ Bloc** generateMap(int size){
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             map[i][j] = chooseBloc(map, i, j, size);
+            if(map[i][j].id == 0){
+                int r = rand() % 100;
+                if(r <= 2) map[i][j].chest = 1;
+            }
         }
     }
     return map;
@@ -171,6 +175,7 @@ void displayMap(Bloc ** map, int size){
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[33mP ");
             else if(map[i][j].mobOn) printf("\033[33mM ");
+            else if(map[i][j].chest) printf("\033[33m@ ");
             else printf("%s ", map[i][j].display);
         }
         printf("\n");

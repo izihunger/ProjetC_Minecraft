@@ -1,5 +1,6 @@
 #pragma once
 
+#include "item.h"
 #include <time.h>
 #include <string.h>
 
@@ -13,8 +14,15 @@ typedef struct Bloc
     int movable;
     int playerOn;
     int mobOn;
-    //Item item;
+    int chest;
 }Bloc;
+
+typedef struct Chest{
+    int posX;
+    int posY;
+    Item * items;
+}Chest;
+
 
 extern const Bloc Dirt;
 extern const Bloc Stone;

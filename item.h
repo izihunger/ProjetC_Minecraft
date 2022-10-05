@@ -6,8 +6,8 @@ typedef struct Item
     char display;
 }Item;
 
-const Item i_dirt = {'d'};
-const Item i_stone = {'d'};
-const Item i_wood = {'d'};
+extern const Item i_dirt;         
+extern const Item i_stone;
+extern const Item i_wood;
 
 #endif
