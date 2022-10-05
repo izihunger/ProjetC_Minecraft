@@ -19,7 +19,7 @@ Bloc** createGrid(int size){
 
 Bloc chooseBloc(Bloc ** map, int i, int j, int size){
     int r;
-    if(i == 0 && j == 0)
+    if(j == 0)
         r = rand() % 4;
     else if(map[i][j-1].id == 0){
         //printf("Last is dirt\n");
