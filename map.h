@@ -1,9 +1,6 @@
 #pragma once
 
 #include "item.h"
-#include <time.h>
-#include <string.h>
-#include <stdlib.h>
 
 typedef struct Bloc
 {
@@ -21,7 +18,7 @@ typedef struct Bloc
 typedef struct Chest{
     int posX;
     int posY;
-    Item items[5];
+    Item items[2];
 }Chest;
 
 extern const Bloc Dirt;
@@ -36,3 +33,4 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size);
 Bloc** generateMap(int size);
 Bloc ** loadMap(char * filename, char name[20], int * mapsize);
 void displayMap(Bloc ** map, int size);
+void fillChest(Chest * chest);

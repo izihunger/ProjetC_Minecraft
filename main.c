@@ -1,5 +1,3 @@
-# include <stdio.h>
-# include <stdlib.h>
 # include "mob.h"
 
 typedef struct gameStatut

@@ -25,7 +25,7 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size){
         r = rand() % 4;
     else if(map[i][j-1].id == 0){
         //printf("Last is dirt\n");
-        r = rand() % 100;
+        r = rand() % 99;
         //printf("Pourcentage : %d\n", r);
         if(r >= 0 && r < 40) r = 0;
         else if(r >= 40 && r < 65) r = 1;
@@ -34,21 +34,21 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size){
     }
     else if(map[i][j-1].id == 1){
         //printf("Last is stone\n");
-        r = rand() % 100;
+        r = rand() % 99;
         //printf("Pourcentage : %d\n", r);
         if(r >= 0 && r < 40) r = 0;
         else r = 1;
     }
     else if(map[i][j-1].id == 2){
         //printf("Last is water\n");
-        r = rand() % 100;
+        r = rand() % 99;
         //printf("Pourcentage : %d\n", r);
         if(r >= 0 && r < 35) r = 0;
         else r = 2;
     }
     else if(map[i][j-1].id == 3){
         //printf("Last is tree\n");
-        r = rand() % 100;
+        r = rand() % 99;
         //printf("Pourcentage : %d\n", r);
         if(r >= 0 && r < 70) r = 0;
         else r = 3;
@@ -92,8 +92,15 @@ Bloc** generateMap(int size){
             if(map[i][j].chest){
                 chest[k].posX = j;
                 chest[k].posX = i;
+                fillChest(&chest[k]);
             }
         }
+    }
+    for(int i = 0; i < nbCoffres; i++){
+        for(int j = 0; j < 2; j++){
+            printf("%s ", chest[i].items[j].name);
+        }
+        printf("\n");
     }
     return map;
 }
@@ -204,4 +211,18 @@ void displayMap(Bloc ** map, int size){
             \'m\' pour entrez dans le menu\n\
             \'e\' pour exit le jeu\n\
             \nEntrez votre commande : ");
+}
+
+void fillChest(Chest * chest){
+    srand(time(NULL));
+    int r1 = rand() % 2;
+    Item item;
+    item = selectItem(r1);
+    chest->items[0] = item;
+    int r2;
+    do{
+        r2 = rand() % 2;
+    }while(r2 == r1);
+    item = selectItem(r2);
+    chest->items[1] = item;
 }
