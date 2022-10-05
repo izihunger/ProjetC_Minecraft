@@ -1,6 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
-# include "player.h"
+# include "mob.h"
 
 typedef struct gameStatut
 {
@@ -76,6 +76,7 @@ void game(){
         setPlayerName(game.playerName);
         game.map = generateMap(game.size);
         spawnPlayer(game.map, game.size);
+        spawnMob(game.map, game.size);
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/

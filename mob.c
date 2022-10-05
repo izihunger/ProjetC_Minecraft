@@ -10,5 +10,5 @@ void spawnMob(Bloc ** map, int size){
     }while(!map[i][j].spawnable);
     mob.posX = j;
     mob.posY = i;
-    map[i][j].playerOn = 1;
+    map[i][j].mobOn = 1;
 }

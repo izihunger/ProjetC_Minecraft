@@ -10,4 +10,5 @@ typedef struct Mob {
     int posY;
 } Mob;
 
-void spawnmob(Bloc ** map, int size);
+void spawnMob(Bloc ** map, int size);
+void moveMob(Bloc ** map, Player player);

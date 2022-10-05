@@ -6,6 +6,7 @@
         "xutility": "c",
         "stdlib.h": "c",
         "map.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "mob.h": "c"
     }
 }
