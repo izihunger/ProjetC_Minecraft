@@ -97,6 +97,7 @@ void game(){
         if(c == 'm') displayMenu(game);
         else{
             movePlayer(game.map, c);
+            moveMob(game.map, getPlayer());
             displayMap(game.map, game.size);
         }
     }

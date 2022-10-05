@@ -7,8 +7,12 @@ void spawnMob(Bloc ** map, int size){
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable);
+    }while(!map[i][j].spawnable && map[i][j].chest);
     mob.posX = j;
     mob.posY = i;
     map[i][j].mobOn = 1;
+}
+
+void moveMob(Bloc ** map, Player player){
+    if(abs(mob.posX - player.posX) < )
 }

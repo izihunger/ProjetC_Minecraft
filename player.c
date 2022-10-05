@@ -14,7 +14,7 @@ void spawnPlayer(Bloc ** map,int size){
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable);
+    }while(!map[i][j].spawnable && map[i][j].chest);
     player.posX = j;
     player.posY = i;
     map[i][j].playerOn = 1;
@@ -90,3 +90,7 @@ void actionBlocPlayer(Bloc ** map){
     }
 }
 */
+
+Player getPlayer(){
+    return player;
+}

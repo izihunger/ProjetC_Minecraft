@@ -170,7 +170,7 @@ Bloc ** loadMap(char * filename, char name[20], int * mapsize){
 }
 
 void displayMap(Bloc ** map, int size){
-    //system("cls");
+    system("clear");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[33mP ");

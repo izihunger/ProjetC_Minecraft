@@ -21,3 +21,4 @@ void spawnPlayer(Bloc ** map, int size);
 void setPos(int x, int y);
 void setPlayerName(char name[]);
 void actionBlocPlayer(Bloc ** map);
+Player getPlayer();

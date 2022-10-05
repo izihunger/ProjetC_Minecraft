@@ -3,6 +3,7 @@
 #include "item.h"
 #include <time.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct Bloc
 {
