@@ -16,6 +16,11 @@ typedef struct Bloc
     //Item item;
 }Bloc;
 
+extern const Bloc Dirt;
+extern const Bloc Stone;
+extern const Bloc Water;
+extern const Bloc Tree;
+
 Bloc** createGrid(int size);
 Bloc chooseBloc(Bloc ** map, int i, int j, int size);
 Bloc** generateMap(int size);
