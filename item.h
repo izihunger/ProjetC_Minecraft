@@ -1,16 +1,22 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <time.h>
+#include <string.h>
+#include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
+
 typedef struct Item
 {
     int id;
     char name[255];
-    int quantity;
-    int quantityMax;
 }Item;
 
-extern const Item i_dirt;         
-extern const Item i_stone;
-extern const Item i_wood;
+extern const Item sword;         
+extern const Item egg;
+extern const Item meal;
+
+Item selectItem(int value);
 
 #endif
