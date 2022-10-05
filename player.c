@@ -1,55 +1,52 @@
 #include "player.h"
 
-/*
-const Bloc Dirt = {0, "\033[31m#", 1, 1, 1, 0};
-const Bloc Stone = {1, "\033[37m#", 1, 1, 1, 0};
-const Bloc Water = {2, "\033[34m~", 0, 0, 1, 0};
-const Bloc Tree = {3, "\033[32mT", 0, 0, 0, 0};
-*/
 
 Player player = {"default", 0, 50, 0, 0};
 
+// Fonction pour spawn le joueur
 void spawnPlayer(Bloc ** map,int size){
     int i, j;
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable && map[i][j].chest);
+    }while(!map[i][j].spawnable && map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
     player.posX = j;
     player.posY = i;
-    map[i][j].playerOn = 1;
+    map[i][j].playerOn = 1; // On met le joueur sur la map
 }
 
+// Fonction pour set la position du joueur lors du chargement d'une partie
 void setPos(int x, int y){
     player.posX = x;
     player.posY = y;
 }
 
+// Fonction pour déplacer le joueur
 void movePlayer(Bloc ** map, char c){
     switch (c)
     {
-    case 'z':
+    case 'z': // Déplacement vers le haut
         if(map[player.posY - 1][player.posX].crossable){
             map[player.posY][player.posX].playerOn = 0;
             player.posY --;
             map[player.posY][player.posX].playerOn = 1;
         }
         break;
-    case 's':
+    case 's': // Déplacement vers le bas
         if(map[player.posY + 1][player.posX].crossable){
             map[player.posY][player.posX].playerOn = 0;
             player.posY ++;
             map[player.posY][player.posX].playerOn = 1;
         }
         break;
-    case 'q':
+    case 'q': // Déplacement vers la gauche
         if(map[player.posY][player.posX - 1].crossable){
             map[player.posY][player.posX].playerOn = 0;
             player.posX --;
             map[player.posY][player.posX].playerOn = 1;
         }
         break;
-    case 'd':
+    case 'd': // Déplacement vers la droite
         if(map[player.posY][player.posX + 1].crossable){
             map[player.posY][player.posX].playerOn = 0;
             player.posX ++;
@@ -63,6 +60,8 @@ void movePlayer(Bloc ** map, char c){
         break;
     }
 }
+
+// Fonction pour set le nom du joueur
 void setPlayerName(char * name){
     player.name = name;
 }
@@ -91,6 +90,7 @@ void actionBlocPlayer(Bloc ** map){
 }
 */
 
+// Fonction pour récupérer les données du joueur
 Player getPlayer(){
     return player;
 }
