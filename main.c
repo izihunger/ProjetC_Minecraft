@@ -47,18 +47,14 @@ void displayMenu(gameStatut game){
         printf("Enter the path where you want to save : ");
         char path[255];
         scanf("%s", path);
-        char * c = path;
-        while(*c){
-            c++;
-        }
+        int len = strlen(path);
         char * txt = "save.txt";
         for(int i = 0; i < strlen(txt); i++){
-            *c = txt[i];
-            c++;
+            path[len+i] = txt[i];
         }
         printf("%s", path);
         FILE * file = fopen("Save.txt", "w");
-        //fprintf(file, "%d\n", game.size);
+        fprintf(file, "%d;%s\n", game.size, game.playerName);
         for(int i = 0; i < game.size; i++){
             for(int j = 0; j < game.size; j++){
                 fprintf(file, "%d;%s;%d;%d;%d;%d;%d\n", game.map[i][j].id, game.map[i][j].display, game.map[i][j].crossable,\
@@ -80,14 +76,12 @@ void game(){
         setPlayerName(game.playerName);
         game.map = generateMap(game.size);
         spawnPlayer(game.map, game.size);
-        printf("oui");
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/
     }
     else if(value == 2){
-        game.size = 20;
-        game.map = loadMap(game.size);
+        game.map = loadMap("Save.txt", game.playerName, &game.size);
         for(int i = 0; i < game.size; i++){
             for(int j = 0; j < game.size; j++){
                 if(game.map[i][j].playerOn == 1) setPos(j, i);
