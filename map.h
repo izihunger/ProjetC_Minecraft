@@ -36,4 +36,5 @@ Bloc chooseBloc(float perlinValue);
 Bloc** generateMap(int size);
 Bloc ** loadMap(char * filename, char name[20], int * mapsize);
 void displayMap(Bloc ** map, int size);
+void displayCommand();
 void fillChest(Chest * chest);

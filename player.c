@@ -54,7 +54,7 @@ void movePlayer(Bloc ** map, char c){
         }
         break;
     case 't':
-        //actionBlocPlayer(map);
+        actionBlocPlayer(map);
         break;
     default:
         break;
@@ -66,7 +66,7 @@ void setPlayerName(char * name){
     player.name = name;
 }
 
-/*
+
 // Modif map : tree repere puis detruit mais display ne change pas
 void actionBlocPlayer(Bloc ** map){
     if(map[player.posY-1][player.posX].id == 3 || map[player.posY+1][player.posX].id == 3 || map[player.posY][player.posX-1].id == 3 || map[player.posY][player.posX+1].id == 3){
@@ -88,7 +88,7 @@ void actionBlocPlayer(Bloc ** map){
         printf("Pas d'arbre a casser\n");
     }
 }
-*/
+
 
 // Fonction pour récupérer les données du joueur
 Player getPlayer(){

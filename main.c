@@ -91,6 +91,7 @@ void game(){
     else if(value == 3){
     }
     displayMap(game.map, game.size);
+    displayCommand();
     char c;
     while(scanf(" %c", &c) == 1 && c != 'e'){
         if(c == 'm') displayMenu(game);
@@ -98,6 +99,15 @@ void game(){
             movePlayer(game.map, c);
             moveMob(game.map, getPlayer(), game.size);
             displayMap(game.map, game.size);
+            if(game.map[getPlayer().posY][getPlayer().posX].chest){
+                int chestChoice;
+                printf("Vous etes sur un coffre ! Voulez vous l'ouvrir ? (1 pour oui / 0 pour non) : \n");
+                scanf("%d", &chestChoice);
+                if(chestChoice){
+                    printf("Coffre ouvert !");
+                }
+            } 
+            displayCommand();
         }
     }
     free(game.map);

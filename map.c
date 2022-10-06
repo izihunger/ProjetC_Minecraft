@@ -214,11 +214,15 @@ void displayMap(Bloc ** map, int size){
         }
         printf("\n");
     }
+}
+
+void displayCommand(){
     printf("\nCommandes :\n\
             \'z\' pour monter\n\
             \'s\' pour descendre\n\
             \'q\' pour aller a gauche\n\
             \'d\' pour aller a gauche\n\
+            \'t\' casser un arbre\n\
             \'m\' pour entrez dans le menu\n\
             \'e\' pour exit le jeu\n\
             \nEntrez votre commande : ");
