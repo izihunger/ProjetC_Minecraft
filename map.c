@@ -6,6 +6,7 @@ const Bloc Dirt = {0, "\033[31m#", 1, 1, 0, 0, 0, 0};
 const Bloc Stone = {1, "\033[37m#", 1, 1, 0, 0, 0, 0};
 const Bloc Water = {2, "\033[34m~", 0, 0, 0, 0, 0, 0};
 const Bloc Tree = {3, "\033[32mT", 0, 0, 1, 0, 0, 0};
+const Bloc Sand = {4, "\033[33ms", 1, 1, 0, 0, 0, 0};
 
 Chest * chest;
 
@@ -19,7 +20,8 @@ Bloc** createGrid(int size){
     return map;
 }
 
-Bloc chooseBloc(Bloc ** map, int i, int j, int size){
+Bloc chooseBloc(float perlinValue){
+    /*
     int r;
     if(j == 0)
         r = rand() % 4;
@@ -66,16 +68,22 @@ Bloc chooseBloc(Bloc ** map, int i, int j, int size){
         return Tree;
     default:
         return Dirt;
-    }
+    }*/
+    if(perlinValue > 0 && perlinValue <= 0.4) return Stone;
+    else if(perlinValue > 0.4 && perlinValue <= 0.6) return Dirt;
+    else if(perlinValue > 0.6 && perlinValue <= 0.66) return Sand;
+    else return Water;
 }
 
 Bloc** generateMap(int size){
     Bloc ** map = createGrid(size);
     int nbCoffres = 0;
     srand(time(NULL));
+    float perlinValue;
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            map[i][j] = chooseBloc(map, i, j, size);
+            perlinValue = perlin2d(j, i, 0.1, 4);
+            map[i][j] = chooseBloc(perlinValue);
             if(map[i][j].id == 0){
                 int r = rand() % 100;
                 if(r <= 2){
