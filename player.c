@@ -9,7 +9,7 @@ void spawnPlayer(Bloc ** map,int size){
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable && map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
+    }while(!map[i][j].spawnable || map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
     player.posX = j;
     player.posY = i;
     map[i][j].playerOn = 1; // On met le joueur sur la map

@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[31m#", 1, 1, 0, 0, 0, 0};
-const Bloc Stone = {1, "\033[37m#", 1, 1, 0, 0, 0, 0};
-const Bloc Water = {2, "\033[34m~", 0, 0, 0, 0, 0, 0};
-const Bloc Tree = {3, "\033[32mT", 0, 0, 1, 0, 0, 0};
-const Bloc Sand = {4, "\033[33ms", 1, 1, 0, 0, 0, 0};
+const Bloc Dirt = {0, "\033[31m# ", 1, 1, 0, 0, 0, 0};
+const Bloc Stone = {1, "\033[37m# ", 1, 1, 0, 0, 0, 0};
+const Bloc Water = {2, "\033[34m~ ", 0, 0, 0, 0, 0, 0};
+const Bloc Tree = {3, "\033[32mT ", 0, 0, 1, 0, 0, 0};
+const Bloc Sand = {4, "\033[33ms ", 1, 1, 0, 0, 0, 0};
 
 Chest * chest;
 
@@ -69,16 +69,18 @@ Bloc chooseBloc(float perlinValue){
     default:
         return Dirt;
     }*/
-    if(perlinValue > 0 && perlinValue <= 0.4) return Stone;
-    else if(perlinValue > 0.4 && perlinValue <= 0.6) return Dirt;
-    else if(perlinValue > 0.6 && perlinValue <= 0.66) return Sand;
-    else return Water;
+    if(perlinValue > 0 && perlinValue <= 0.30) return Stone;
+    else if(perlinValue > 0.30 && perlinValue <= 0.45) return Dirt;
+    else if(perlinValue > 0.50 && perlinValue <= 0.55) return Tree;
+    else if(perlinValue > 0.60 && perlinValue <= 0.66) return Sand;
+    else if(perlinValue > 0.66 && perlinValue <= 1) return Water;
+    else return Dirt;
 }
 
 Bloc** generateMap(int size){
     Bloc ** map = createGrid(size);
+    SEED = rand()%10000;
     int nbCoffres = 0;
-    srand(time(NULL));
     float perlinValue;
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -205,10 +207,10 @@ void displayMap(Bloc ** map, int size){
     system("clear");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            if(map[i][j].playerOn) printf("\033[33mP ");
-            else if(map[i][j].mobOn) printf("\033[33mM ");
-            else if(map[i][j].chest) printf("\033[33m@ ");
-            else printf("%s ", map[i][j].display);
+            if(map[i][j].playerOn) printf("\033[36mP ");
+            else if(map[i][j].mobOn) printf("\033[36mM ");
+            else if(map[i][j].chest) printf("\033[35m@ ");
+            else printf("%s", map[i][j].display);
         }
         printf("\n");
     }

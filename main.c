@@ -64,6 +64,7 @@ void displayMenu(gameStatut game){
 }
 // Function to create the start menu : END
 void game(){
+    srand(time(NULL));
     gameStatut game;
     int value = displayStartMenu();
     if(value == 1){

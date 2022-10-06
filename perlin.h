@@ -1,5 +1,7 @@
 #pragma once
 
+extern int SEED;
+
 int noise2(int x, int y);
 float lin_inter(float x, float y, float s);
 float smooth_inter(float x, float y, float s);

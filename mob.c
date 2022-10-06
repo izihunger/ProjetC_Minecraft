@@ -8,7 +8,7 @@ void spawnMob(Bloc ** map, int size){
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable && map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
+    }while(!map[i][j].spawnable || map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
     mob.posX = j;
     mob.posY = i;
     map[i][j].mobOn = 1; // On met le mob sur la map
