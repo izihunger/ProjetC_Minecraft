@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-Player player = {"default", 0, 50, 0, 0};
+Player player = {"default", 0, 50, 0, 0, 0};
 
 // Fonction pour spawn le joueur
 void spawnPlayer(Bloc ** map,int size){
@@ -89,8 +89,36 @@ void actionBlocPlayer(Bloc ** map){
     }
 }
 
-
 // Fonction pour récupérer les données du joueur
 Player getPlayer(){
     return player;
+}
+
+void openChest(Bloc ** map){
+    int i = 0;
+    while (chest[i].posX != player.posX || chest[i].posY != player.posY)
+    {
+        i++;
+    } 
+    printf("Ce coffre contient %s et %s lequel voulez vous prendre ? (1 ou 2) : ", chest[i].items[0].name, chest[i].items[1].name);
+    int choice;
+    scanf("%d", &choice);
+    if(choice == 1 || choice == 2){
+        if(player.nbItems < 32){
+            player.inventory[player.nbItems] = chest[i].items[choice-1];
+            player.nbItems ++;
+        }
+    }
+    map[player.posY][player.posX].chest = 0;
+}
+
+void displayInventory(){
+    printf("\n\033[04mInventory :\033[00m\n\n");
+    for (int i = 0; i < player.nbItems; i++)
+    {
+        printf("%s ", player.inventory[i].name);
+        if((i == 7 && player.nbItems-1 > 7) || (i == 15 && player.nbItems-1 > 15) || (i == 23 && player.nbItems-1 > 23)) printf("\n-----------------------------------------------------------\n");
+        else if(i != player.nbItems-1) printf("| ");
+    }
+    printf("\n\n");
 }

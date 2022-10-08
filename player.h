@@ -11,6 +11,8 @@ typedef struct Player {
     int hp;
     int posX;
     int posY;
+    int nbItems;
+    Item inventory[32];
 } Player;
 
 // Structure : END
@@ -22,3 +24,5 @@ void setPos(int x, int y);
 void setPlayerName(char name[]);
 void actionBlocPlayer(Bloc ** map);
 Player getPlayer();
+void openChest(Bloc ** map);
+void displayInventory();

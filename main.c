@@ -95,16 +95,20 @@ void game(){
     char c;
     while(scanf(" %c", &c) == 1 && c != 'e'){
         if(c == 'm') displayMenu(game);
+        else if(c == 'i'){
+            displayInventory();
+            displayCommand();
+        }
         else{
             movePlayer(game.map, c);
             moveMob(game.map, getPlayer(), game.size);
             displayMap(game.map, game.size);
             if(game.map[getPlayer().posY][getPlayer().posX].chest){
                 int chestChoice;
-                printf("Vous etes sur un coffre ! Voulez vous l'ouvrir ? (1 pour oui / 0 pour non) : \n");
+                printf("Vous etes sur un coffre ! Voulez vous l'ouvrir ? (1 pour oui / 0 pour non) : ");
                 scanf("%d", &chestChoice);
                 if(chestChoice){
-                    printf("Coffre ouvert !");
+                    openChest(game.map);
                 }
             } 
             displayCommand();

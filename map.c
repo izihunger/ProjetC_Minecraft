@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[31m# ", 1, 1, 0, 0, 0, 0};
-const Bloc Stone = {1, "\033[37m# ", 1, 1, 0, 0, 0, 0};
-const Bloc Water = {2, "\033[34m~ ", 0, 0, 0, 0, 0, 0};
-const Bloc Tree = {3, "\033[32mT ", 0, 0, 1, 0, 0, 0};
-const Bloc Sand = {4, "\033[33ms ", 1, 1, 0, 0, 0, 0};
+const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0};
+const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0};
+const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0};
+const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0};
+const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0};
 
 Chest * chest;
+int nbChest;
 
 // Function to generate the map : START
 Bloc** createGrid(int size){
@@ -80,7 +81,6 @@ Bloc chooseBloc(float perlinValue){
 Bloc** generateMap(int size){
     Bloc ** map = createGrid(size);
     SEED = rand()%10000;
-    int nbCoffres = 0;
     float perlinValue;
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
@@ -90,24 +90,24 @@ Bloc** generateMap(int size){
                 int r = rand() % 100;
                 if(r <= 2){
                     map[i][j].chest = 1;
-                    nbCoffres ++;
+                    nbChest ++;
                 }
             }
         }
     }
-    chest = (Chest*) malloc(nbCoffres * sizeof(Chest));
+    chest = (Chest*) malloc(nbChest * sizeof(Chest));
     int k = 0;
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(map[i][j].chest){
                 chest[k].posX = j;
-                chest[k].posX = i;
+                chest[k].posY = i;
                 fillChest(&chest[k]);
                 k++;
             }
         }
     }
-    for(int i = 0; i < nbCoffres; i++){
+    for(int i = 0; i < nbChest; i++){
         for(int j = 0; j < 2; j++){
             printf("%s ", chest[i].items[j].name);
         }
@@ -204,12 +204,12 @@ Bloc ** loadMap(char * filename, char name[20], int * mapsize){
 }
 
 void displayMap(Bloc ** map, int size){
-    system("clear");
+    //system("clear");
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            if(map[i][j].playerOn) printf("\033[36mP ");
-            else if(map[i][j].mobOn) printf("\033[36mM ");
-            else if(map[i][j].chest) printf("\033[35m@ ");
+            if(map[i][j].playerOn) printf("\033[36mP \033[37m");
+            else if(map[i][j].mobOn) printf("\033[36mM \033[37m");
+            else if(map[i][j].chest) printf("\033[35m@ \033[37m");
             else printf("%s", map[i][j].display);
         }
         printf("\n");
@@ -222,7 +222,8 @@ void displayCommand(){
             \'s\' pour descendre\n\
             \'q\' pour aller a gauche\n\
             \'d\' pour aller a gauche\n\
-            \'t\' casser un arbre\n\
+            \'i\' pour voir votre inventaire\n\
+            \'t\' pour casser un arbre\n\
             \'m\' pour entrez dans le menu\n\
             \'e\' pour exit le jeu\n\
             \nEntrez votre commande : ");
