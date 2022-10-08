@@ -99,16 +99,17 @@ void game(){
             displayInventory();
             displayCommand();
         }
-        else{
+        else if(c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 't'){
             movePlayer(game.map, c);
             moveMob(game.map, getPlayer(), game.size);
             displayMap(game.map, game.size);
             if(game.map[getPlayer().posY][getPlayer().posX].chest){
                 int chestChoice;
                 printf("Vous etes sur un coffre ! Voulez vous l'ouvrir ? (1 pour oui / 0 pour non) : ");
-                scanf("%d", &chestChoice);
-                if(chestChoice){
-                    openChest(game.map);
+                if(scanf("%d", &chestChoice)){
+                    if(chestChoice){
+                        openChest(game.map);
+                    }
                 }
             } 
             displayCommand();

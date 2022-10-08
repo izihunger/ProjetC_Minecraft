@@ -102,11 +102,12 @@ void openChest(Bloc ** map){
     } 
     printf("Ce coffre contient %s et %s lequel voulez vous prendre ? (1 ou 2) : ", chest[i].items[0].name, chest[i].items[1].name);
     int choice;
-    scanf("%d", &choice);
-    if(choice == 1 || choice == 2){
-        if(player.nbItems < 32){
-            player.inventory[player.nbItems] = chest[i].items[choice-1];
-            player.nbItems ++;
+    if(scanf("%d", &choice)){
+        if(choice == 1 || choice == 2){
+            if(player.nbItems < 32){
+                player.inventory[player.nbItems] = chest[i].items[choice-1];
+                player.nbItems ++;
+            }
         }
     }
     map[player.posY][player.posX].chest = 0;
