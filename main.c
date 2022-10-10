@@ -100,7 +100,7 @@ void game(){
             displayCommand();
         }
         else if(c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 't'){
-            movePlayer(game.map, c);
+            movePlayer(game.map,game.size, c);
             moveMob(game.map, getPlayer(), game.size);
             displayMap(game.map, game.size);
             if(game.map[getPlayer().posY][getPlayer().posX].chest){

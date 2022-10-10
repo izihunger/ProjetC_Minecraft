@@ -16,6 +16,10 @@ typedef struct Item
 extern const Item sword;         
 extern const Item egg;
 extern const Item meal;
+extern const Item helmet;
+extern const Item apple;
+
+extern const int nbItems;
 
 Item selectItem(int value);
 

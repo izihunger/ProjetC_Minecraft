@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0};
-const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0};
-const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0};
-const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0};
-const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0};
+const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0};
+const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0};
+const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0};
+const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0};
+const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0};
 
 Chest * chest;
 int nbChest;
@@ -205,15 +205,25 @@ Bloc ** loadMap(char * filename, char name[20], int * mapsize){
 
 void displayMap(Bloc ** map, int size){
     //system("clear");
+    printf("-");
+    for(int i = 0; i < size+1; i++) printf("--");
+    printf("\n");
     for(int i = 0; i < size; i++){
+        printf("| ");
         for(int j = 0; j < size; j++){
             if(map[i][j].playerOn) printf("\033[36mP \033[37m");
-            else if(map[i][j].mobOn) printf("\033[36mM \033[37m");
-            else if(map[i][j].chest) printf("\033[35m@ \033[37m");
-            else printf("%s", map[i][j].display);
+            else if(map[i][j].vision){
+                if(map[i][j].mobOn) printf("\033[36mM \033[37m");
+                else if(map[i][j].chest) printf("\033[35m@ \033[37m");
+                else printf("%s", map[i][j].display);
+            }
+            else printf("  ");
         }
-        printf("\n");
+        printf("|\n");
     }
+    printf("-");
+    for(int i = 0; i < size+1; i++) printf("--");
+    printf("\n");
 }
 
 void displayCommand(){
@@ -230,13 +240,13 @@ void displayCommand(){
 }
 
 void fillChest(Chest * chest){
-    int r1 = rand() % 3;
+    int r1 = rand() % nbItems;
     Item item;
     item = selectItem(r1);
     chest->items[0] = item;
     int r2;
     do{
-        r2 = rand() % 3;
+        r2 = rand() % nbItems;
     }while(r2 == r1);
     item = selectItem(r2);
     chest->items[1] = item;

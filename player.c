@@ -12,7 +12,40 @@ void spawnPlayer(Bloc ** map,int size){
     }while(!map[i][j].spawnable || map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
     player.posX = j;
     player.posY = i;
-    map[i][j].playerOn = 1; // On met le joueur sur la map
+    map[i][j].playerOn = 1;
+    addVision(map, size);
+}
+
+void addVision(Bloc ** map, int size){
+    if(player.posY == 0){
+        if(player.posX == 0){
+            map[player.posY][player.posX+1].vision = 1;
+            map[player.posY+1][player.posX].vision = 1;
+            map[player.posY+1][player.posX+1].vision = 1;
+        }
+        else if(player.posX == size-1){
+            map[player.posY][player.posX+1].vision = 1;
+            map[player.posY+1][player.posX].vision = 1;
+            map[player.posY+1][player.posX+1].vision = 1;
+            map[player.posY-1][player.posX+1].vision = 1;
+        }
+        else{
+            map[player.posY][player.posX+1].vision = 1;
+            map[player.posY][player.posX-1].vision = 1;
+            map[player.posY+1][player.posX].vision = 1;
+            map[player.posY+1][player.posX+1].vision = 1;
+            map[player.posY+1][player.posX-1].vision = 1;
+        }
+    }
+    map[player.posY][player.posX+1].vision = 1;
+    map[player.posY][player.posX-1].vision = 1;
+    map[player.posY+1][player.posX].vision = 1;
+    map[player.posY-1][player.posX].vision = 1;
+    map[player.posY+1][player.posX+1].vision = 1;
+    map[player.posY-1][player.posX+1].vision = 1;
+    map[player.posY+1][player.posX-1].vision = 1;
+    map[player.posY-1][player.posX-1].vision = 1;
+
 }
 
 // Fonction pour set la position du joueur lors du chargement d'une partie
@@ -22,7 +55,7 @@ void setPos(int x, int y){
 }
 
 // Fonction pour déplacer le joueur
-void movePlayer(Bloc ** map, char c){
+void movePlayer(Bloc ** map, int size, char c){
     switch (c)
     {
     case 'z': // Déplacement vers le haut
@@ -30,6 +63,7 @@ void movePlayer(Bloc ** map, char c){
             map[player.posY][player.posX].playerOn = 0;
             player.posY --;
             map[player.posY][player.posX].playerOn = 1;
+            addVision(map, size);
         }
         break;
     case 's': // Déplacement vers le bas
@@ -37,6 +71,7 @@ void movePlayer(Bloc ** map, char c){
             map[player.posY][player.posX].playerOn = 0;
             player.posY ++;
             map[player.posY][player.posX].playerOn = 1;
+            addVision(map, size);
         }
         break;
     case 'q': // Déplacement vers la gauche
@@ -44,6 +79,7 @@ void movePlayer(Bloc ** map, char c){
             map[player.posY][player.posX].playerOn = 0;
             player.posX --;
             map[player.posY][player.posX].playerOn = 1;
+            addVision(map, size);
         }
         break;
     case 'd': // Déplacement vers la droite
@@ -51,6 +87,7 @@ void movePlayer(Bloc ** map, char c){
             map[player.posY][player.posX].playerOn = 0;
             player.posX ++;
             map[player.posY][player.posX].playerOn = 1;
+            addVision(map, size);
         }
         break;
     case 't':

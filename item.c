@@ -2,7 +2,11 @@
 
 const Item sword = {0, "sword"};         
 const Item egg = {1, "egg"};       
-const Item meal = {1, "meal"};       
+const Item meal = {2, "meal"};  
+const Item helmet = {3, "helmet"};   
+const Item apple = {4, "apple"};   
+
+const int nbItems = 5;
 
 Item selectItem(int value){
     switch (value)
@@ -13,6 +17,10 @@ Item selectItem(int value){
             return egg;
         case 2:
             return meal;
+        case 3:
+            return helmet;
+        case 4:
+            return apple;
         default:
             return sword;
     }
