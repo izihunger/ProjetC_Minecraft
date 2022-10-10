@@ -20,7 +20,8 @@ typedef struct Player {
 // Function : START
 void movePlayer(Bloc ** map, int size, char c);
 void spawnPlayer(Bloc ** map, int size);
-void addVision(Bloc ** map, int size);
+void spawnVision(Bloc ** map, int size);
+void addVision(Bloc ** map, int size, char c);
 void setPos(int x, int y);
 void setPlayerName(char name[]);
 void actionBlocPlayer(Bloc ** map);
