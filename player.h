@@ -9,6 +9,7 @@ typedef struct Player {
     char * name;
     int level;
     int hp;
+    int atk;
     int posX;
     int posY;
     int nbItems;

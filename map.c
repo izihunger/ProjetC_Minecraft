@@ -10,7 +10,7 @@ const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0};
 
 Chest * chest;
 int nbChest;
-char * displayPlayer = "\033[36m\36 \033[37m";
+char * displayPlayer = "\033[36mP \033[37m";
 
 // Function to generate the map : START
 Bloc** createGrid(int size){

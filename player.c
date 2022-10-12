@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-Player player = {"default", 0, 50, 0, 0, 0};
+Player player = {"default", 0, 50, 5, 0, 0, 0};
 
 // Fonction pour spawn le joueur
 void spawnPlayer(Bloc ** map,int size){
@@ -291,7 +291,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posY --;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            displayPlayer = "\033[36m\36 \033[37m";
+            //displayPlayer = "\033[36m\36 \033[37m";
             addVision(map, size, c, 3);
         }
         break;
@@ -302,7 +302,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posY ++;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            displayPlayer = "\033[36m\37 \033[37m";
+            //displayPlayer = "\033[36m\37 \033[37m";
             addVision(map, size, c, 3);
         }   
         break;
@@ -313,7 +313,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posX --;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            displayPlayer = "\033[36m\21 \033[37m";
+            //displayPlayer = "\033[36m\21 \033[37m";
             addVision(map, size, c, 3);
         }
         break;
@@ -324,7 +324,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posX ++;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            displayPlayer = "\033[36m\20 \033[37m";
+            //displayPlayer = "\033[36m\20 \033[37m";
             addVision(map, size, c, 3);
         }
         break;
