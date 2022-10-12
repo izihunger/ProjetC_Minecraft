@@ -1,5 +1,6 @@
 #ifndef ITEM_H
 #define ITEM_H
+extern const int NO_ITEM_ID = 10;
 
 #include <time.h>
 #include <string.h>
