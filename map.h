@@ -30,6 +30,7 @@ extern const Bloc Tree;
 extern const Bloc Sand;
 
 extern Chest * chest;
+extern char * displayPlayer;
 
 Bloc** createGrid(int size);
 //Bloc chooseBloc(Bloc ** map, int i, int j, int size);

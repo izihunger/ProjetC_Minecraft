@@ -104,13 +104,7 @@ void game(){
             moveMob(game.map, getPlayer(), game.size);
             displayMap(game.map, game.size);
             if(game.map[getPlayer().posY][getPlayer().posX].chest){
-                int chestChoice;
-                printf("Vous etes sur un coffre ! Voulez vous l'ouvrir ? (1 pour oui / 0 pour non) : ");
-                if(scanf("%d", &chestChoice)){
-                    if(chestChoice){
-                        openChest(game.map);
-                    }
-                }
+                    openChest(game.map);
             } 
             displayCommand();
         }

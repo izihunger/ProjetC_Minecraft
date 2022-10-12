@@ -1,10 +1,10 @@
 #include "item.h"
 
-const Item sword = {0, "sword"};         
-const Item egg = {1, "egg"};       
-const Item meal = {2, "meal"};  
-const Item helmet = {3, "helmet"};   
-const Item apple = {4, "apple"};   
+const Item sword = {0, "epee"};         
+const Item egg = {1, "oeuf"};       
+const Item meat = {2, "viande"};  
+const Item helmet = {3, "casque"};   
+const Item apple = {4, "pommme"};   
 
 const int nbItems = 5;
 
@@ -16,7 +16,7 @@ Item selectItem(int value){
         case 1:
             return egg;
         case 2:
-            return meal;
+            return meat;
         case 3:
             return helmet;
         case 4:

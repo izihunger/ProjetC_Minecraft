@@ -21,7 +21,7 @@ typedef struct Player {
 void movePlayer(Bloc ** map, int size, char c);
 void spawnPlayer(Bloc ** map, int size);
 void spawnVision(Bloc ** map, int size);
-void addVision(Bloc ** map, int size, char c);
+void addVision(Bloc ** map, int size, char c, int maxrange);
 void setPos(int x, int y);
 void setPlayerName(char name[]);
 void actionBlocPlayer(Bloc ** map);

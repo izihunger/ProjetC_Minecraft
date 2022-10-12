@@ -10,6 +10,7 @@ const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0};
 
 Chest * chest;
 int nbChest;
+char * displayPlayer = "\033[36m\36 \033[37m";
 
 // Function to generate the map : START
 Bloc** createGrid(int size){
@@ -211,7 +212,7 @@ void displayMap(Bloc ** map, int size){
     for(int i = 0; i < size; i++){
         printf("| ");
         for(int j = 0; j < size; j++){
-            if(map[i][j].playerOn) printf("\033[36mP \033[37m");
+            if(map[i][j].playerOn) printf("%s", displayPlayer);
             else if(map[i][j].vision){
                 if(map[i][j].mobOn) printf("\033[36mM \033[37m");
                 else if(map[i][j].chest) printf("\033[35m@ \033[37m");
