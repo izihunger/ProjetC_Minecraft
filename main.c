@@ -101,8 +101,11 @@ void game(){
         }
         else if(c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 't'){
             movePlayer(game.map,game.size, c);
+            printf("err1");
             moveMob(game.map, getPlayer(), game.size);
+            printf("err2");
             displayMap(game.map, game.size);
+            printf("err3");
             if(game.map[getPlayer().posY][getPlayer().posX].chest){
                     openChest(game.map);
             } 

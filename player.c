@@ -155,6 +155,7 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                 }
             }
             else break;
+            printf("oui");
             if(map[player.posY+1][player.posX].crossable){
                 for(int i = 2; i <= maxrange; i++){
                     if(player.posY+i < size){
@@ -176,6 +177,7 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                     else break;
                 }
             }
+            printf("fin");
             break;
         case 'q':
             /*map[player.posY][player.posX-1].vision = 1;
@@ -201,6 +203,7 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                 }
             }
             else break;
+            printf("oui");
             if(map[player.posY][player.posX-1].crossable){
                 for(int i = 2; i <= maxrange; i++){
                     if(player.posX-i >= 0){
@@ -209,19 +212,23 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                         }
                         if(allowVision) map[player.posY][player.posX-i].vision = 1;
                         allowVision = 1;
+                        printf("oui");
                         for(int j = 1; j < i; j++){
-                            if(!map[player.posY+1][player.posX-j].crossable) allowVision = 0;
+                            if(player.posY+1 < size) if(!map[player.posY+1][player.posX-j].crossable) allowVision = 0;
                         }
-                        if(allowVision && player.posY+1 < size) map[player.posY+1][player.posX-i].vision = 1;
+                        if(player.posY+1 < size && allowVision) map[player.posY+1][player.posX-i].vision = 1;
                         allowVision = 1;
+                        printf("oui");
                         for(int j = 1; j < i; j++){
-                            if(!map[player.posY-1][player.posX-j].crossable) allowVision = 0;
+                            if(player.posY-1 >= 0) if(!map[player.posY-1][player.posX-j].crossable) allowVision = 0;
                         }
                         if(allowVision && player.posY-1 >= 0) map[player.posY-1][player.posX-i].vision = 1;
+                        printf("oui");
                     }
                     else break;
                 }
             }
+            printf("fin");
             break;
         case 'd':
             /*map[player.posY][player.posX+1].vision = 1;
@@ -247,6 +254,7 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                 }
             }
             else break;
+            printf("oui");
             if(map[player.posY][player.posX+1].crossable){
                 for(int i = 2; i <= maxrange; i++){
                     if(player.posX+i < size){
@@ -255,15 +263,18 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
                         }
                         if(allowVision) map[player.posY][player.posX+i].vision = 1;
                         allowVision = 1;
+                        printf("oui");
                         for(int j = 1; j < i; j++){
-                            if(!map[player.posY+1][player.posX+j].crossable) allowVision = 0;
+                            if(player.posY+1 < size) if(!map[player.posY+1][player.posX+j].crossable) allowVision = 0;
                         }
                         if(allowVision && player.posY+1 < size) map[player.posY+1][player.posX+i].vision = 1;
                         allowVision = 1;
+                        printf("oui");
                         for(int j = 1; j < i; j++){
-                            if(!map[player.posY-1][player.posX+j].crossable) allowVision = 0;
+                            if(player.posY-1 >= 0) if(!map[player.posY-1][player.posX+j].crossable) allowVision = 0;
                         }
                         if(allowVision && player.posY-1 >= 0) map[player.posY-1][player.posX+i].vision = 1;
+                        printf("oui");
                     }
                     else break;
                 }
@@ -329,7 +340,7 @@ void movePlayer(Bloc ** map, int size, char c){
         }
         break;
     case 't':
-        actionBlocPlayer(map);
+        actionBlocPlayer(map, size);
         break;
     default:
         break;
@@ -343,24 +354,30 @@ void setPlayerName(char * name){
 
 
 // Modif map : tree repere puis detruit mais display ne change pas
-void actionBlocPlayer(Bloc ** map){
-    if(map[player.posY-1][player.posX].id == 3 || map[player.posY+1][player.posX].id == 3 || map[player.posY][player.posX-1].id == 3 || map[player.posY][player.posX+1].id == 3){
-        printf("Il y a un arbre à casser\n");
+void actionBlocPlayer(Bloc ** map, int size){
+    if(player.posY-1 >= 0){
         if(map[player.posY-1][player.posX].id == 3){
             map[player.posY-1][player.posX] = Dirt;
-        }
-        else if(map[player.posY+1][player.posX].id == 3){
-            map[player.posY+1][player.posX] = Dirt;
-        }
-        else if(map[player.posY][player.posX-1].id == 3){
-            map[player.posY][player.posX-1] = Dirt;
-        }
-        else if(map[player.posY][player.posX+1].id == 3){
-            map[player.posY][player.posX+1] = Dirt;
+            map[player.posY-1][player.posX].vision = 1;
         }
     }
-    else{
-        printf("Pas d'arbre a casser\n");
+    if(player.posY+1 < size){
+        if(map[player.posY+1][player.posX].id == 3){
+            map[player.posY+1][player.posX] = Dirt;
+            map[player.posY+1][player.posX].vision = 1;
+        }
+    }
+    if(player.posX-1 >= 0){
+        if(map[player.posY][player.posX-1].id == 3){
+            map[player.posY][player.posX-1] = Dirt;
+            map[player.posY][player.posX-1].vision = 1;
+        }
+    }
+    if(player.posX+1 < size){
+        if(map[player.posY][player.posX+1].id == 3){
+            map[player.posY][player.posX+1] = Dirt;
+            map[player.posY][player.posX+1].vision = 1;
+        }
     }
 }
 
@@ -375,11 +392,11 @@ void openChest(Bloc ** map){
     {
         i++;
     } 
-    printf("Vous êtes sur un coffre !\nCe coffre contient %s et %s lequel voulez vous prendre ? (1 ou 2) : ", chest[i].items[0].name, chest[i].items[1].name);
+    printf("Vous etes sur un coffre !\nCe coffre contient un(e) %s et un(e) %s lequel voulez vous prendre ? (1 ou 2) : ", chest[i].items[0].name, chest[i].items[1].name);
     int choice;
     if(scanf("%d", &choice)){
         if(choice == 1 || choice == 2){
-            if(player.nbItems < 32){
+            if(player.nbItems < nbItemMax){
                 player.inventory[player.nbItems] = chest[i].items[choice-1];
                 player.nbItems ++;
             }
