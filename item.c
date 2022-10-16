@@ -9,6 +9,7 @@ const Item apple = {4, "pommme"};
 const int nbItems = 5;
 const int NO_ITEM_ID = 10;
 
+// Function to select an item with his value
 Item selectItem(int value){
     switch (value)
     {

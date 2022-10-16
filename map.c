@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include "map.h"
 
+// All the blocs to create the map
 const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
 const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
 const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0, 1};
 const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0, 1};
 const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
 
-Chest * chest;
-int nbChest;
-char * displayPlayer = "\033[36m▲ \033[37m";
+Chest * chest; // Contains all the chest on the map
+int nbChest; // Number of chests
+char * displayPlayer = "\033[36m▲ \033[37m"; // Player's display
 
-// Function to generate the map : START
+// Function to generate the grid of map
 Bloc** createGrid(int size){
     Bloc ** map = (Bloc**) malloc(size * sizeof(Bloc*));
     for (int i = 0; i < size; i++)
@@ -22,55 +23,8 @@ Bloc** createGrid(int size){
     return map;
 }
 
+// Function to choose the bloc with perlin noise
 Bloc chooseBloc(float perlinValue){
-    /*
-    int r;
-    if(j == 0)
-        r = rand() % 4;
-    else if(map[i][j-1].id == 0){
-        //printf("Last is dirt\n");
-        r = rand() % 99;
-        //printf("Pourcentage : %d\n", r);
-        if(r >= 0 && r < 40) r = 0;
-        else if(r >= 40 && r < 65) r = 1;
-        else if(r >= 65 && r < 90) r = 2;
-        else r = 3;
-    }
-    else if(map[i][j-1].id == 1){
-        //printf("Last is stone\n");
-        r = rand() % 99;
-        //printf("Pourcentage : %d\n", r);
-        if(r >= 0 && r < 40) r = 0;
-        else r = 1;
-    }
-    else if(map[i][j-1].id == 2){
-        //printf("Last is water\n");
-        r = rand() % 99;
-        //printf("Pourcentage : %d\n", r);
-        if(r >= 0 && r < 35) r = 0;
-        else r = 2;
-    }
-    else if(map[i][j-1].id == 3){
-        //printf("Last is tree\n");
-        r = rand() % 99;
-        //printf("Pourcentage : %d\n", r);
-        if(r >= 0 && r < 70) r = 0;
-        else r = 3;
-    }
-    //printf("%d\n", r);
-    switch (r)
-    {
-    case 0:
-        return Dirt;
-    case 1:
-        return Stone;
-    case 2:
-        return Water;
-    case 3:
-        return Tree;
-    default:
-        return Dirt;
-    }*/
     if(perlinValue > 0 && perlinValue <= 0.30) return Stone;
     else if(perlinValue > 0.30 && perlinValue <= 0.45) return Dirt;
     else if(perlinValue > 0.50 && perlinValue <= 0.55) return Tree;
@@ -79,6 +33,7 @@ Bloc chooseBloc(float perlinValue){
     else return Dirt;
 }
 
+// Function to generate all the map
 Bloc** generateMap(int size){
     Bloc ** map = createGrid(size);
     SEED = rand()%10000;
@@ -116,8 +71,8 @@ Bloc** generateMap(int size){
     }
     return map;
 }
-// Function to generate the map : END
 
+// Function to load the map from a file
 Bloc ** loadMap(char * filename, char name[20], int * mapsize){
     int size, i = 0, j = 0;
     FILE * file = fopen(filename, "r");
@@ -204,6 +159,7 @@ Bloc ** loadMap(char * filename, char name[20], int * mapsize){
     return map;
 }
 
+// Function to display the map with blocs / player / chests / mobs
 void displayMap(Bloc ** map, int size){
     //system("clear");
     printf("-");
@@ -227,6 +183,7 @@ void displayMap(Bloc ** map, int size){
     printf("\n");
 }
 
+// Function to display the command
 void displayCommand(){
     printf("\nCommandes :\n\
             \'z\' pour monter\n\
@@ -240,6 +197,7 @@ void displayCommand(){
             \nEntrez votre commande : ");
 }
 
+// Function to fill the chests with items
 void fillChest(Chest * chest){
     int r1 = rand() % nbItems;
     chest->items[0] = selectItem(r1);

@@ -3,7 +3,7 @@
 
 Player player = {"default", 0, 50, 5, 0, 0, 0};
 
-// Fonction pour spawn le joueur
+// Fonction to spawn the player
 void spawnPlayer(Bloc ** map,int size){
     int i, j;
     do{
@@ -16,6 +16,7 @@ void spawnPlayer(Bloc ** map,int size){
     spawnVision(map, size);
 }
 
+// Function to allow the vision of the player when he spawns
 void spawnVision(Bloc ** map, int size){
     map[player.posY][player.posX].vision = 1;
     if(player.posY == 0 && player.posX == 0){
@@ -78,25 +79,12 @@ void spawnVision(Bloc ** map, int size){
     }
 }
 
+// Function to allow the vision of the player when he moves
 void addVision(Bloc ** map, int size, char c, int maxrange){
     int allowVision = 1;
     switch (c)
     {
         case 'z':
-            /*if(player.posY-1 >= 0){
-                map[player.posY-1][player.posX].vision = 1;              
-                if(player.posX-1 >= 0) map[player.posY-1][player.posX-1].vision = 1;
-                if(player.posX+1 < size) map[player.posY-1][player.posX+1].vision = 1;
-                if(player.posY-2 >= 0){
-                    if(map[player.posY-1][player.posX].crossable && player.posY-2 >= 0){
-                        map[player.posY-2][player.posX].vision = 1;
-                        if(player.posX-1 >= 0) map[player.posY-2][player.posX-1].vision = 1;
-                        if(player.posX+1 < size) map[player.posY-2][player.posX+1].vision = 1;
-                    }
-                    if(map[player.posY-1][player.posX-1].crossable && player.posX-1 >= 0 && player.posX-2 >= 0) map[player.posY-2][player.posX-2].vision = 1;
-                    if(map[player.posY-1][player.posX+1].crossable && player.posX+1 < size && player.posX+2 < size) map[player.posY-2][player.posX+2].vision = 1;
-                }
-            }*/
             if(player.posY-1 >= 0){
                 map[player.posY-1][player.posX].vision = 1;
                 if(player.posX+1 < size){
@@ -132,17 +120,6 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
             }
             break;
         case 's':
-            /*map[player.posY+1][player.posX].vision = 1;
-            map[player.posY+1][player.posX-1].vision = 1;
-            map[player.posY+1][player.posX+1].vision = 1;
-            if(map[player.posY+1][player.posX].crossable){
-                map[player.posY+2][player.posX].vision = 1;
-                map[player.posY+2][player.posX-1].vision = 1;
-                map[player.posY+2][player.posX+1].vision = 1;
-            } 
-            if(map[player.posY+1][player.posX-1].crossable) map[player.posY+2][player.posX-2].vision = 1;
-            if(map[player.posY+1][player.posX+1].crossable) map[player.posY+2][player.posX+2].vision = 1;
-            break;*/
             if(player.posY+1 < size){
                 map[player.posY+1][player.posX].vision = 1;
                 if(player.posX+1 < size){
@@ -180,17 +157,6 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
             printf("fin");
             break;
         case 'q':
-            /*map[player.posY][player.posX-1].vision = 1;
-            map[player.posY-1][player.posX-1].vision = 1;
-            map[player.posY+1][player.posX-1].vision = 1;
-            if(map[player.posY][player.posX-1].crossable){
-                map[player.posY][player.posX-2].vision = 1;
-                map[player.posY-1][player.posX-2].vision = 1;
-                map[player.posY+1][player.posX-2].vision = 1;
-            } 
-            if(map[player.posY-1][player.posX-1].crossable) map[player.posY-2][player.posX-2].vision = 1;
-            if(map[player.posY+1][player.posX-1].crossable) map[player.posY+2][player.posX-2].vision = 1;
-            break;*/
             if(player.posX-1 >= 0){
                 map[player.posY][player.posX-1].vision = 1;
                 if(player.posY+1 < size){
@@ -231,17 +197,6 @@ void addVision(Bloc ** map, int size, char c, int maxrange){
             printf("fin");
             break;
         case 'd':
-            /*map[player.posY][player.posX+1].vision = 1;
-            map[player.posY-1][player.posX+1].vision = 1;
-            map[player.posY+1][player.posX+1].vision = 1;
-            if(map[player.posY][player.posX+1].crossable){
-                map[player.posY][player.posX+2].vision = 1;
-                map[player.posY-1][player.posX+2].vision = 1;
-                map[player.posY+1][player.posX+2].vision = 1;
-            } 
-            if(map[player.posY-1][player.posX-1].crossable) map[player.posY-2][player.posX-2].vision = 1;
-            if(map[player.posY+1][player.posX-1].crossable) map[player.posY+2][player.posX-2].vision = 1;
-            break;*/
             if(player.posX+1 < size){
                 map[player.posY][player.posX+1].vision = 1;
                 if(player.posY+1 < size) {
