@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "map.h"
 
-const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0};
-const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0};
-const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0};
-const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0};
-const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0};
+const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
+const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
+const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0, 1};
+const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0, 1};
+const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
 
 Chest * chest;
 int nbChest;
@@ -242,13 +242,10 @@ void displayCommand(){
 
 void fillChest(Chest * chest){
     int r1 = rand() % nbItems;
-    Item item;
-    item = selectItem(r1);
-    chest->items[0] = item;
+    chest->items[0] = selectItem(r1);
     int r2;
     do{
         r2 = rand() % nbItems;
     }while(r2 == r1);
-    item = selectItem(r2);
-    chest->items[1] = item;
+    chest->items[1] = selectItem(r2);
 }

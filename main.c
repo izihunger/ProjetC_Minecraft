@@ -72,10 +72,15 @@ void game(){
         scanf("%d", &game.size);
         printf("Entrez votre nom de joueur : ");
         scanf("%s", game.playerName);
+        printf("test\n");
         setPlayerName(game.playerName);
+        printf("test\n");
         game.map = generateMap(game.size);
+        printf("test\n");
         spawnPlayer(game.map, game.size);
         spawnMob(game.map, game.size);
+        spawnMob(game.map, game.size);
+        printf("test\n");
         /*fflush(stdout);
         char c = _getch();
         printf("%c", c);*/

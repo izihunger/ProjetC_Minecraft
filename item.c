@@ -7,12 +7,13 @@ const Item helmet = {3, "casque"};
 const Item apple = {4, "pommme"};   
 
 const int nbItems = 5;
+const int NO_ITEM_ID = 10;
 
 Item selectItem(int value){
     switch (value)
     {
         case 0:
-             return sword;
+            return sword;
         case 1:
             return egg;
         case 2:

@@ -10,6 +10,9 @@ typedef struct Mob {
     int posY;
 } Mob;
 
+extern Mob * mobs;
+extern int nbMob;
+
 void spawnMob(Bloc ** map, int size);
 void moveMob(Bloc ** map, Player player, int size);
 void fightMob(Bloc ** map, Mob mob, Player player, char c);
