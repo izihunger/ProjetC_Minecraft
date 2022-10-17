@@ -33,7 +33,7 @@ int displayStartMenu(){
 }
 
 void displayMenu(gameStatut game){
-    system("cls");
+    //system("cls");
     printf("Welcome to the menu !\n");
     printf("Choose your option :\n\n");
     printf("1. Save\n");
@@ -42,17 +42,16 @@ void displayMenu(gameStatut game){
     int choice;
     scanf("%d", &choice);
     if(choice == 1){
-        printf("Enter the path where you want to save : ");
-        char path[255];
-        scanf("%s", path);
-        int len = strlen(path);
-        char * txt = "save.txt";
-        for(int i = 0; i < strlen(txt); i++){
-            path[len+i] = txt[i];
+        printf("oui");
+        FILE * file;
+        if(!(file = fopen("./Save.txt", "w")))
+        printf("oui");
+        fprintf(file, "%d;%s;%d\n", game.size, game.playerName, nbMob);
+        printf("oui");
+        for(int i = 0; i < nbMob; i++){
+            fprintf(file, "%d;%d;%s;%d;%d\n", mobs[i].atk, mobs[i].hp, mobs[i].name, mobs[i].posX, mobs[i].posY);
         }
-        printf("%s", path);
-        FILE * file = fopen("Save.txt", "w");
-        fprintf(file, "%d;%s\n", game.size, game.playerName);
+        printf("oui");
         for(int i = 0; i < game.size; i++){
             for(int j = 0; j < game.size; j++){
                 fprintf(file, "%d;%s;%d;%d;%d;%d;%d\n", game.map[i][j].id, game.map[i][j].display, game.map[i][j].crossable,\
