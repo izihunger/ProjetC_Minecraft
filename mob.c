@@ -3,24 +3,48 @@
 Mob mob = {"zombie", 20, 8, 0, 0};
 
 Mob * mobs;
-int nbMob = 0;
+unsigned int nbMob = 0;
 
 // Fonction pour faire spawn un mob
 void spawnMob(Bloc ** map, int size){
+    printf("Spawn mob\n");
     int i,j;
     do{
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable || map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
-    if(nbMob == 0) mobs = (Mob*) malloc(sizeof(Mob));
-    else mobs = (Mob*) realloc(mobs, nbMob * sizeof(Mob));
+    }while(!map[i][j].spawnable || map[i][j].chest || map[i][j].playerOn || map[i][j].mobOn); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
+    if(nbMob == 0){
+        /*mobs = (Mob**) malloc(sizeof(Mob*));
+        mobs[i] = (Mob*) malloc(sizeof(Mob));*/
+        mobs = (Mob*) malloc(sizeof(Mob));
+    } 
+    else {
+        /*printf("%d", nbMob);
+        Mob * pmob = (Mob*) malloc(nbMob * sizeof(Mob));
+        for(int i = 0; i<nbMob-1; i++){
+            pmob[i] = mobs[i];
+        }
+        free(mobs);
+        mobs = pmob;*/
+        /*mobs = (Mob*) realloc(mobs, nbMob * sizeof(Mob));
+        for(int i = 0; i<nbMob, i++){
+            mobs[i] = (Mob*) malloc(sizeof(Mob));
+        }   */
+        printf("%ld\n", sizeof(Mob));
+        printf("%ld\n", sizeof(Mob*));
+        printf("%ld\n", sizeof(mobs));
+        printf("%d\n", nbMob);
+        mobs = (Mob*) realloc(mobs, nbMob+1 * sizeof(Mob));
+        printf("after realloc");
+    }
     mobs[nbMob] = mob;
     mobs[nbMob].posX = j;
     mobs[nbMob].posY = i;
     nbMob++;
     map[i][j].mobOn = 1; // On met le mob sur la map
-    printf("\n%d, %d\n", i, j);
-    printf("\n%d, %d\n", mobs[nbMob].posY, mobs[nbMob].posX);
+    //printf("\n%d, %d\n", i, j);
+    printf("\n%d, %d\n", mobs[nbMob-1].posY, mobs[nbMob-1].posX);
+    printf("fin spawn mob\n");
 }
 
 // Fonction pour faire bouger le mob

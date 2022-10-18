@@ -257,7 +257,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posY --;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            //displayPlayer = "\033[36m\36 \033[37m";
+            displayPlayer = "\033[36mᐃ \033[37m";
             addVision(map, size, c, 3);
         }
         break;
@@ -268,7 +268,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posY ++;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            //displayPlayer = "\033[36m\37 \033[37m";
+            displayPlayer = "\033[36mᐁ \033[37m";
             addVision(map, size, c, 3);
         }   
         break;
@@ -279,7 +279,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posX --;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            //displayPlayer = "\033[36m\21 \033[37m";
+            displayPlayer = "\033[36mᐊ \033[37m";
             addVision(map, size, c, 3);
         }
         break;
@@ -290,7 +290,7 @@ void movePlayer(Bloc ** map, int size, char c){
                 player.posX ++;
                 map[player.posY][player.posX].playerOn = 1;
             }
-            //displayPlayer = "\033[36m\20 \033[37m";
+            displayPlayer = "\033[36mᐅ \033[37m";
             addVision(map, size, c, 3);
         }
         break;
@@ -369,4 +369,7 @@ void displayInventory(){
         else if(i != player.nbItems-1) printf("| ");
     }
     printf("\n\n");
+    char fin;
+    printf("Appuyer sur entrée pour reafficher la map...");
+    scanf("%c", &fin);
 }

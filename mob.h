@@ -11,7 +11,7 @@ typedef struct Mob {
 } Mob;
 
 extern Mob * mobs;
-extern int nbMob;
+extern unsigned int nbMob;
 
 void spawnMob(Bloc ** map, int size);
 void moveMob(Bloc ** map, Player player, int size);

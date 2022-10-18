@@ -11,7 +11,7 @@ const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
 
 Chest * chest; // Contains all the chest on the map
 int nbChest; // Number of chests
-char * displayPlayer = "\033[36m▲ \033[37m"; // Player's display
+char * displayPlayer = "\033[36mᐃ \033[37m"; // Player's display
 
 // Function to generate the grid of map
 Bloc** createGrid(int size){
@@ -164,7 +164,7 @@ void displayMap(Bloc ** map, int size){
     //system("clear");
     printf("-");
     for(int i = 0; i < size+1; i++) printf("--");
-    printf("\n");
+    printf("\r\n");
     for(int i = 0; i < size; i++){
         printf("| ");
         for(int j = 0; j < size; j++){
@@ -176,25 +176,25 @@ void displayMap(Bloc ** map, int size){
             }
             else printf("  ");
         }
-        printf("|\n");
+        printf("|\r\n");
     }
     printf("-");
     for(int i = 0; i < size+1; i++) printf("--");
-    printf("\n");
+    printf("\r\n");
 }
 
 // Function to display the command
 void displayCommand(){
-    printf("\nCommandes :\n\
-            \'z\' pour monter\n\
-            \'s\' pour descendre\n\
-            \'q\' pour aller a gauche\n\
-            \'d\' pour aller a gauche\n\
-            \'i\' pour voir votre inventaire\n\
-            \'t\' pour casser un arbre\n\
-            \'m\' pour entrez dans le menu\n\
-            \'e\' pour exit le jeu\n\
-            \nEntrez votre commande : ");
+    printf("\r\nCommandes :\r\n\
+            \'z\' pour monter\r\n\
+            \'s\' pour descendre\r\n\
+            \'q\' pour aller a gauche\r\n\
+            \'d\' pour aller a gauche\r\n\
+            \'i\' pour voir votre inventaire\r\n\
+            \'t\' pour casser un arbre\r\n\
+            \'m\' pour entrez dans le menu\r\n\
+            \'e\' pour exit le jeu\r\n\
+            \r\nEntrez votre commande : ");
 }
 
 // Function to fill the chests with items
