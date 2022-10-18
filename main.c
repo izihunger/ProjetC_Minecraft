@@ -67,11 +67,14 @@ void displayMenu(gameStatut game){
     int choice;
     scanf("%d", &choice);
     if(choice == 1){
+        Mob array_mob[nbMob];               // Création d'un tableau de mob qui va contenir les mobs de la map
+        for(int i = 0; i < nbMob; i++){     // car les fopen et fprintf modifie les valeurs de mes mobs dans la variable mobs
+            array_mob[i] = getMob(i);
+        }
         FILE * file = fopen("./Save.txt", "w");
         fprintf(file, "%d;%s;%d\n", game.size, game.playerName, nbMob);
         for(int i = 0; i < nbMob; i++){
-            printf("%d, %d\n", mobs[0].posX, mobs[1].posY);
-            fprintf(file, "%d;%d;%s;%d;%d\n", mobs[i].atk, mobs[i].hp, mobs[i].name, mobs[i].posX, mobs[i].posY);
+            fprintf(file, "%d;%d;%s;%d;%d\n", array_mob[i].atk, array_mob[i].hp, array_mob[i].name, array_mob[i].posX, array_mob[i].posY);
         }
         for(int i = 0; i < game.size; i++){
             for(int j = 0; j < game.size; j++){
@@ -80,10 +83,12 @@ void displayMenu(gameStatut game){
             }
         }
         fclose(file);
-        displayMap(game.map, game.size);
-        displayCommand();
+        for(int i = 0; i < nbMob; i++){     // On remet les mobs dans la variable mobs
+            setMob(i, array_mob[i]);
+        }
     }
 }
+
 // Function to create the start menu : END
 void game(){
     srand(time(NULL));
@@ -94,21 +99,13 @@ void game(){
         scanf("%d", &game.size);
         printf("Entrez votre nom de joueur : ");
         scanf("%s", game.playerName);
-        printf("test\n");
         setPlayerName(game.playerName);
-        printf("test\n");
         game.map = generateMap(game.size);
-        printf("test\n");
         spawnPlayer(game.map, game.size);
         int nbSpawnMob = game.size * 15 / 100;
-        printf("%d\n", nbSpawnMob);
         for(int i = 0; i < nbSpawnMob; i++){
             spawnMob(game.map, game.size);
         }
-        printf("test\n");
-        /*fflush(stdout);
-        char c = _getch();
-        printf("%c", c);*/
     }
     else if(value == 2){
         game.map = loadMap("Save.txt", game.playerName, &game.size);
@@ -121,13 +118,12 @@ void game(){
     else if(value == 3){
     }
     mode_raw(1);
-    displayMap(game.map, game.size);
-    displayCommand();
     int play = 1;
     char c;
     while(play){
+        displayMap(game.map, game.size);
+        displayCommand();
         c = getchar();
-        printf("a");
         if(c == 'e') play = 0;
         else if(c == 'm') {
             mode_raw(0);
@@ -138,13 +134,9 @@ void game(){
             mode_raw(0);
             displayInventory();
             mode_raw(1);
-            displayCommand();
         }
         else if(c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 't'){
             movePlayer(game.map,game.size, c);
-            printf("err1");
-            displayMap(game.map, game.size);
-            printf("err2");
             if(game.map[getPlayer().posY][getPlayer().posX].chest){
                 mode_raw(0);
                 openChest(game.map);
@@ -152,9 +144,6 @@ void game(){
             } 
         }
         moveMob(game.map, getPlayer(), game.size);
-        displayMap(game.map, game.size);
-        displayCommand();
-        printf("%d\r\n", mobs[2].posX);
     }
     mode_raw(0);
     free(game.map);

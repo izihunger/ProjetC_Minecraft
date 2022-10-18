@@ -3,11 +3,11 @@
 #include "map.h"
 
 // All the blocs to create the map
-const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
-const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
-const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0, 1};
-const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0, 1};
-const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0, 1};
+const Bloc Dirt = {0, "\033[31m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 0};
+const Bloc Stone = {1, "\033[37m# \033[37m", 1, 1, 0, 0, 0, 0, 0, 0};
+const Bloc Water = {2, "\033[34m~ \033[37m", 0, 0, 0, 0, 0, 0, 0, 0};
+const Bloc Tree = {3, "\033[32mT \033[37m", 0, 0, 1, 0, 0, 0, 0, 0};
+const Bloc Sand = {4, "\033[33ms \033[37m", 1, 1, 0, 0, 0, 0, 0, 0};
 
 Chest * chest; // Contains all the chest on the map
 int nbChest; // Number of chests
@@ -161,7 +161,7 @@ Bloc ** loadMap(char * filename, char name[20], int * mapsize){
 
 // Function to display the map with blocs / player / chests / mobs
 void displayMap(Bloc ** map, int size){
-    //system("clear");
+    system("clear");
     printf("-");
     for(int i = 0; i < size+1; i++) printf("--");
     printf("\r\n");
@@ -194,7 +194,7 @@ void displayCommand(){
             \'t\' pour casser un arbre\r\n\
             \'m\' pour entrez dans le menu\r\n\
             \'e\' pour exit le jeu\r\n\
-            \r\nEntrez votre commande : ");
+            \r\nEntrez votre commande : \r");
 }
 
 // Function to fill the chests with items
