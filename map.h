@@ -30,13 +30,13 @@ extern const Bloc Tree;
 extern const Bloc Sand;
 
 extern Chest * chest;
+extern int nbChest;
 extern char * displayPlayer;
 
 Bloc** createGrid(int size);
 //Bloc chooseBloc(Bloc ** map, int i, int j, int size);
 Bloc chooseBloc(float perlinValue);
 Bloc** generateMap(int size);
-Bloc ** loadMap(char * filename, char name[20], int * mapsize);
 void displayMap(Bloc ** map, int size);
 void displayCommand();
 void fillChest(Chest * chest);

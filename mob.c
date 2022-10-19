@@ -7,11 +7,15 @@ int nbMob = 0;
 
 // Fonction pour faire spawn un mob
 void spawnMob(Bloc ** map, int size){
+    printf("Debut spawn mob\n");
     int i,j;
     do{
+        printf("Boucle position\n");
         i = rand() % size;
         j = rand() % size;
+        printf("%d, %d, %d, %d\n", map[i][j].spawnable, map[i][j].playerOn, map[i][j].mobOn, map[i][j].chest);
     }while(!map[i][j].spawnable || map[i][j].chest || map[i][j].playerOn || map[i][j].mobOn); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
+    printf("Position trouve\n");
     if(nbMob == 0){
         mobs = (Mob*) malloc(sizeof(Mob));
     } 
@@ -23,18 +27,25 @@ void spawnMob(Bloc ** map, int size){
     mobs[nbMob].posY = i;
     nbMob++;
     map[i][j].mobOn = 1; // On met le mob sur la map
+    printf("Fin spawn mob\n");
 }
 
 // Fonction pour faire bouger le mob
 void moveMob(Bloc ** map, Player player, int size){
+    printf("oui\r\n");
     for(int i = 0; i<nbMob; i++){
         int move = rand() % 4; // On génère un nombre entre 0 et 3 pour déterminer si le mob bouge ou pas
         if(move != 0){
             if(abs(mobs[i].posX - player.posX) < 20 && abs(mobs[i].posY - player.posY) < 20){ // Si le joueur est à moins de 20 blocs du mob (agro du joueur)
+                printf("J-20\r\n");
                 if(abs(player.posX - mobs[i].posX) > abs(player.posY - mobs[i].posY)){ // Si la distance entre le joueur et le mob est plus grande en x que en y (le mob se déplace en x)
+                    printf("X\r\n");
                     if(player.posX > mobs[i].posX){
+                        printf("player > mob\r\n");
                         if(mobs[i].posX+1 < size){
+                            printf("non\r\n");
                             if(map[mobs[i].posY][mobs[i].posX + 1].crossable && !map[mobs[i].posY][mobs[i].posX + 1].playerOn && !map[mobs[i].posY][mobs[i].posX + 1].mobOn){ // Si le bloc à droite du mob est crossable (déplacement vers la droite)
+                                printf("oui\r\n");
                                 map[mobs[i].posY][mobs[i].posX].mobOn = 0;
                                 mobs[i].posX ++;
                                 map[mobs[i].posY][mobs[i].posX].mobOn = 1;
@@ -42,8 +53,11 @@ void moveMob(Bloc ** map, Player player, int size){
                         }
                     }
                     else{
+                        printf("player < mob\r\n");
                         if(mobs[i].posX-1 >= 0){
+                        printf("non\r\n");
                             if(map[mobs[i].posY][mobs[i].posX - 1].crossable && !map[mobs[i].posY][mobs[i].posX - 1].playerOn && !map[mobs[i].posY][mobs[i].posX - 1].mobOn){ // Si le bloc à gauche du mob est crossable (déplacement vers la gauche)
+                                printf("oui\r\n");
                                 map[mobs[i].posY][mobs[i].posX].mobOn = 0;
                                 mobs[i].posX --;
                                 map[mobs[i].posY][mobs[i].posX].mobOn = 1;
@@ -52,6 +66,7 @@ void moveMob(Bloc ** map, Player player, int size){
                     }
                 }
                 else{ // Si la distance entre le joueur et le mob est plus grande en y que en x (le mob se déplace en y)
+                    printf("Y\r\n");
                     if(player.posY > mobs[i].posY){
                         if(mobs[i].posY+1 < size){
                             if(map[mobs[i].posY + 1][mobs[i].posX].crossable && !map[mobs[i].posY + 1][mobs[i].posX].playerOn && !map[mobs[i].posY + 1][mobs[i].posX].mobOn){ // Si le bloc en dessous du mob est crossable (déplacement vers le bas)
@@ -273,6 +288,10 @@ Mob getMob(int id){
     return mobs[id];
 }
 
-Mob setMob(int id, Mob mob){
+void setMob(int id, Mob mob){
     mobs[id] = mob;
+}
+
+void mallocMob(int size){
+    mobs = (Mob*) malloc(size * sizeof(Mob));
 }

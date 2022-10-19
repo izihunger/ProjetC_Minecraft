@@ -1,0 +1,1 @@
+/usr/bin/gcc-10 -g -rdynamic CMakeFiles/ProjetMinecraft.dir/main.c.o CMakeFiles/ProjetMinecraft.dir/item.c.o CMakeFiles/ProjetMinecraft.dir/map.c.o CMakeFiles/ProjetMinecraft.dir/perlin.c.o CMakeFiles/ProjetMinecraft.dir/player.c.o CMakeFiles/ProjetMinecraft.dir/mob.c.o -o ProjetMinecraft 
