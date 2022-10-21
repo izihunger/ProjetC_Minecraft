@@ -1,6 +1,6 @@
 #ifndef ITEM_H
 #define ITEM_H
-extern const int NO_ITEM_ID = 10;
+
 
 #include <time.h>
 #include <string.h>
@@ -21,6 +21,7 @@ extern const Item helmet;
 extern const Item apple;
 
 extern const int nbItems;
+extern const int NO_ITEM_ID;
 
 Item selectItem(int value);
 

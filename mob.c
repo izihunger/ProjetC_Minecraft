@@ -2,94 +2,134 @@
 
 Mob mob = {"zombie", 20, 8, 0, 0};
 
+Mob * mobs;
+int nbMob = 0;
+
 // Fonction pour faire spawn un mob
 void spawnMob(Bloc ** map, int size){
+    printf("Debut spawn mob\n");
     int i,j;
     do{
+        printf("Boucle position\n");
         i = rand() % size;
         j = rand() % size;
-    }while(!map[i][j].spawnable || map[i][j].chest); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
-    mob.posX = j;
-    mob.posY = i;
+        printf("%d, %d, %d, %d\n", map[i][j].spawnable, map[i][j].playerOn, map[i][j].mobOn, map[i][j].chest);
+    }while(!map[i][j].spawnable || map[i][j].chest || map[i][j].playerOn || map[i][j].mobOn); // On vérifie que le bloc est spawnable et qu'il n'y a pas de coffre
+    printf("Position trouve\n");
+    if(nbMob == 0){
+        mobs = (Mob*) malloc(sizeof(Mob));
+    } 
+    else {
+        mobs = (Mob*) realloc(mobs, nbMob+1 * sizeof(Mob));
+    }
+    mobs[nbMob] = mob;
+    mobs[nbMob].posX = j;
+    mobs[nbMob].posY = i;
+    nbMob++;
     map[i][j].mobOn = 1; // On met le mob sur la map
+    printf("Fin spawn mob\n");
 }
 
 // Fonction pour faire bouger le mob
 void moveMob(Bloc ** map, Player player, int size){
-    srand(time(NULL));
-    int move = rand() % 4; // On génère un nombre entre 0 et 3 pour déterminer si le mob bouge ou pas
-    printf("%d\n", move);
-
-    if(move != 0){
-        if(abs(mob.posX - player.posX) < 20 && abs(mob.posY - player.posY) < 20){ // Si le joueur est à moins de 20 blocs du mob (agro du joueur)
-            if(abs(player.posX - mob.posX) > abs(player.posY - mob.posY)){ // Si la distance entre le joueur et le mob est plus grande en x que en y (le mob se déplace en x)
-                if(player.posX > mob.posX){
-                    if(map[mob.posY][mob.posX + 1].crossable || map[player.posY][player.posX + 1].playerOn == 0){ // Si le bloc à droite du mob est crossable (déplacement vers la droite)
-                        map[mob.posY][mob.posX].mobOn = 0;
-                        mob.posX ++;
-                        map[mob.posY][mob.posX].mobOn = 1;
+    printf("oui\r\n");
+    for(int i = 0; i<nbMob; i++){
+        int move = rand() % 4; // On génère un nombre entre 0 et 3 pour déterminer si le mob bouge ou pas
+        if(move != 0){
+            if(abs(mobs[i].posX - player.posX) < 20 && abs(mobs[i].posY - player.posY) < 20){ // Si le joueur est à moins de 20 blocs du mob (agro du joueur)
+                printf("J-20\r\n");
+                if(abs(player.posX - mobs[i].posX) > abs(player.posY - mobs[i].posY)){ // Si la distance entre le joueur et le mob est plus grande en x que en y (le mob se déplace en x)
+                    printf("X\r\n");
+                    if(player.posX > mobs[i].posX){
+                        printf("player > mob\r\n");
+                        if(mobs[i].posX+1 < size){
+                            printf("non\r\n");
+                            if(map[mobs[i].posY][mobs[i].posX + 1].crossable && !map[mobs[i].posY][mobs[i].posX + 1].playerOn && !map[mobs[i].posY][mobs[i].posX + 1].mobOn){ // Si le bloc à droite du mob est crossable (déplacement vers la droite)
+                                printf("oui\r\n");
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                                mobs[i].posX ++;
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                            }
+                        }
+                    }
+                    else{
+                        printf("player < mob\r\n");
+                        if(mobs[i].posX-1 >= 0){
+                        printf("non\r\n");
+                            if(map[mobs[i].posY][mobs[i].posX - 1].crossable && !map[mobs[i].posY][mobs[i].posX - 1].playerOn && !map[mobs[i].posY][mobs[i].posX - 1].mobOn){ // Si le bloc à gauche du mob est crossable (déplacement vers la gauche)
+                                printf("oui\r\n");
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                                mobs[i].posX --;
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                            }
+                        }
                     }
                 }
-                else{
-                    if(map[mob.posY][mob.posX - 1].crossable || map[player.posY][player.posX - 1].playerOn == 0){ // Si le bloc à gauche du mob est crossable (déplacement vers la gauche)
-                        map[mob.posY][mob.posX].mobOn = 0;
-                        mob.posX --;
-                        map[mob.posY][mob.posX].mobOn = 1;
+                else{ // Si la distance entre le joueur et le mob est plus grande en y que en x (le mob se déplace en y)
+                    printf("Y\r\n");
+                    if(player.posY > mobs[i].posY){
+                        if(mobs[i].posY+1 < size){
+                            if(map[mobs[i].posY + 1][mobs[i].posX].crossable && !map[mobs[i].posY + 1][mobs[i].posX].playerOn && !map[mobs[i].posY + 1][mobs[i].posX].mobOn){ // Si le bloc en dessous du mob est crossable (déplacement vers le bas)
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                                mobs[i].posY ++;
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                            }
+                        }
+                    }
+                    else{
+                        if(mobs[i].posY-1 >= 0){
+                            if(map[mobs[i].posY - 1][mobs[i].posX].crossable && !map[mobs[i].posY - 1][mobs[i].posX].playerOn && !map[mobs[i].posY - 1][mobs[i].posX].mobOn){ // Si le bloc au dessus du mob est crossable (déplacement vers le haut)
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                                mobs[i].posY --;
+                                map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                            }
+                        }
                     }
                 }
             }
-            else{ // Si la distance entre le joueur et le mob est plus grande en y que en x (le mob se déplace en y)
-                if(player.posY > mob.posY){
-                    if(map[mob.posY + 1][mob.posX].crossable || map[player.posY + 1][player.posX].playerOn == 0){ // Si le bloc en dessous du mob est crossable (déplacement vers le bas)
-                        map[mob.posY][mob.posX].mobOn = 0;
-                        mob.posY ++;
-                        map[mob.posY][mob.posX].mobOn = 1;
+            else{ // Si le joueur est à plus de 20 blocs du mob (déplacement aléatoire du mob)
+                int a = rand() % 4; // Choix aléatoire de la direction du mob
+                switch (a)
+                {
+                case 0: // Déplacement vers le haut
+                    if(mobs[i].posY-1 >= 0){
+                        if(map[mobs[i].posY - 1][mobs[i].posX].crossable && !map[mobs[i].posY - 1][mobs[i].posX].mobOn){
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                            mobs[i].posY --;
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                        }
                     }
-                }
-                else{
-                    if(map[mob.posY - 1][mob.posX].crossable || map[player.posY - 1][player.posX].playerOn == 0){ // Si le bloc au dessus du mob est crossable (déplacement vers le haut)
-                        map[mob.posY][mob.posX].mobOn = 0;
-                        mob.posY --;
-                        map[mob.posY][mob.posX].mobOn = 1;
+                    break;
+                case 1: // Déplacement vers le bas
+                    if(mobs[i].posY+1 < size){
+                        if(map[mobs[i].posY + 1][mobs[i].posX].crossable && !map[mobs[i].posY + 1][mobs[i].posX].mobOn){
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                            mobs[i].posY ++;
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                        }
                     }
+                    break;
+                case 2: // Déplacement vers la gauche
+                    if(mobs[i].posX-1 >= 0){
+                        if(map[mobs[i].posY][mobs[i].posX - 1].crossable && !map[mobs[i].posY][mobs[i].posX - 1].mobOn){
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                            mobs[i].posX --;
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                        }
+                    }
+                    break;
+                case 3: // Déplacement vers la droite
+                    if(mobs[i].posX+1 < size){
+                        if(map[mobs[i].posY][mobs[i].posX + 1].crossable && !map[mobs[i].posY][mobs[i].posX + 1].mobOn){
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                            mobs[i].posX ++;
+                            map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                        }
+                    }
+                    break;
+                default:
+                    break;
                 }
-            }
-        }
-        else{ // Si le joueur est à plus de 20 blocs du mob (déplacement aléatoire du mob)
-            srand(time(NULL));
-            int a = rand() % 4; // Choix aléatoire de la direction du mob
-            switch (a)
-            {
-            case 0: // Déplacement vers le haut
-                if(map[mob.posY - 1][mob.posX].crossable){
-                    map[mob.posY][mob.posX].mobOn = 0;
-                    mob.posY --;
-                    map[mob.posY][mob.posX].mobOn = 1;
-                }
-                break;
-            case 1: // Déplacement vers le bas
-                if(map[mob.posY + 1][mob.posX].crossable){
-                    map[mob.posY][mob.posX].mobOn = 0;
-                    mob.posY ++;
-                    map[mob.posY][mob.posX].mobOn = 1;
-                }
-                break;
-            case 2: // Déplacement vers la gauche
-                if(map[mob.posY][mob.posX - 1].crossable){
-                    map[mob.posY][mob.posX].mobOn = 0;
-                    mob.posX --;
-                    map[mob.posY][mob.posX].mobOn = 1;
-                }
-                break;
-            case 3: // Déplacement vers la droite
-                if(map[mob.posY][mob.posX + 1].crossable){
-                    map[mob.posY][mob.posX].mobOn = 0;
-                    mob.posX ++;
-                    map[mob.posY][mob.posX].mobOn = 1;
-                }
-                break;
-            default:
-                break;
             }
         }
     }
@@ -244,6 +284,14 @@ void fightMob(Bloc ** map, Mob mob, Player player, char c){
     
 }
 
-Mob getMob(){
-    return mob;
+Mob getMob(int id){
+    return mobs[id];
+}
+
+void setMob(int id, Mob mob){
+    mobs[id] = mob;
+}
+
+void mallocMob(int size){
+    mobs = (Mob*) malloc(size * sizeof(Mob));
 }
