@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "map.h"
 
+#define nbItemMax 32
+
 // Structure : START
 typedef struct Player {
     char * name;
@@ -13,7 +15,7 @@ typedef struct Player {
     int posX;
     int posY;
     int nbItems;
-    Item inventory[32];
+    Item inventory[nbItemMax];
 } Player;
 
 // Structure : END
@@ -25,7 +27,7 @@ void spawnVision(Bloc ** map, int size);
 void addVision(Bloc ** map, int size, char c, int maxrange);
 void setPos(int x, int y);
 void setPlayerName(char name[]);
-void actionBlocPlayer(Bloc ** map);
+void actionBlocPlayer(Bloc ** map, int size);
 Player getPlayer();
 void openChest(Bloc ** map);
 void displayInventory();
