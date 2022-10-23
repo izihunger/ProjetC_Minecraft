@@ -396,6 +396,9 @@ void game(){
         printf("joueur trouvé\n");
     }
     else if(value == 3){
+        printf("Le jeu va s'arréter dans 5 secondes...\n");
+        sleep(5);
+        exit(0);
     }
     mode_raw(1);
     int play = 1;
@@ -422,10 +425,12 @@ void game(){
                 printf("Chest\r\n");                
                 openChest(game.map);
                 mode_raw(1);
-            } 
+            }
         }
+
         printf("abc\r\n");
         moveMob(game.map, getPlayer(), game.size);
+        fight(game.map, getPlayer(), c);
         printf("cba\r\n");
     }
     mode_raw(0);

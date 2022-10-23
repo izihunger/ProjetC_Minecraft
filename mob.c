@@ -135,153 +135,282 @@ void moveMob(Bloc ** map, Player player, int size){
     }
 }
 
-void fightMob(Bloc ** map, Mob mob, Player player, char c){
-    system("clear");
-    printf("Un %s apparaît !\n", mob.name);
-    
-    while(mob.hp > 0 && player.hp > 0){
-        printf("Santé du %s : %d\t     ▼\n      ▲\tAttaque du %s : %d\t      \nSanté de %s : %d\t     ▼\n      ▲\tAttaque de %s : %d\t      \n",
-            mob.name, mob.hp, mob.name, mob.atk, player.name, player.hp, player.name, player.atk);
-        for(int i=0; i<10; i++){
-            printf("-");
-        }
-        printf("\n\nQue voulez-vous faire ?\n 1: Combattre\n 2: Regarder votre sac à dos\n 3: Prendre la fuite\n");
-        
-        while(c != '1' && c != '2' && c != '3'){
-            scanf("%c", &c);
-        }
+void fight(Bloc ** map, Player player, char c){
+    srand(time(NULL));
+    int critique = rand() % 5;
+    int esquive = rand() % 4;
 
-        if(c == '1'){
-            srand(time(NULL));
-            int quiATK = rand() % 2; //Détermine qui commence
-            if(quiATK == 1){
-                int coupCritique = rand() % 5; //20% chance de faire un coup critique
-                int coupEsquive = rand() % 4; //25% chance d'esquiver le coup
-                printf("%s commence à attaquer !\n", player.name);
-
-                for(int i=0; i<32; i++){
-                    if(player.inventory[i].id == 1){ //Si le player a une épée
-                        player.atk += 5;
-                        if(coupCritique == 0){ //Si est un coup critique
-                            player.atk += 5;
-                            if(coupEsquive == 0){ //le mob esquive le coup
-                                player.atk = player.atk / 2;
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Le %s a esquivé un coup critique, il lui reste %d pv", mob.name, mob.hp);
-                            }
-                            else{
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Vous avez infligé un coup critique au %s ! Il lui reste %d pv", mob.name, mob.hp);
-                            }
+    for(int i = 0; i<nbMob; i++){
+        if(map[mobs[i].posY + 1][mobs[i].posX].playerOn){ // Le mob est 1 case au dessus du joueur
+        printf("%d vie mob \n", mobs[i].hp);
+            if(player.hp > 0 && mobs[i].hp > 0){
+                if(c == 32){
+                    if(critique == 0){ // Si le joueur fait un coup critique
+                        if(esquive == 0){ // Si le mob esquive le coup critique
+                            printf("Le mob esquive !\n");
                         }
-                        else{ //Si n'est pas un coup critique
-                            if(coupEsquive == 0){ //Le mob esquive
-                                player.atk = player.atk / 2;
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Le %s a esquivé le coup, il lui reste %d pv", mob.name, mob.hp);
-                            }
-                            else{
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Vous avez infligé %d pv de dégats au %s, il lui reste %d pv", player.atk, mob.name, mob.hp);
-                            }
+                        else{
+                            mobs[i].hp -= player.atk * 2; // Le mob perd 2 fois plus de vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
                         }
                     }
-                    else{ // Si le joueur n'a pas d'épée
-                        if(coupCritique == 0){ //Si est un coup critique
-                            player.atk += 5;
-                            if(coupEsquive == 0){ //Le mob esquive
-                                player.atk = player.atk / 2;
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Le %s a esquivé un coup critique, il lui reste %d pv", mob.name, mob.hp);
-                            }
-                            else{
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Vous avez infligé un coup critique au %s ! Il lui reste %d pv", mob.name, mob.hp);
-                            }
+                    else{
+                        if(esquive == 0){ // Si le mob esquive le coup
+                            printf("Le mob esquive !\n");
                         }
-                        else{ //Si n'est pas un coup critique
-                            if(coupEsquive == 0){ //Le mob esquive
-                                player.atk = player.atk / 2;
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Le %s a esquivé le coup, il lui reste %d pv", mob.name, mob.hp);
-                            }
-                            else{
-                                mob.hp -= player.atk;
-                                quiATK = 0;
-                                printf("Vous avez infligé %d pv de dégats au %s, il lui reste %d pv", player.atk, mob.name, mob.hp);
-                            }
+                        else{
+                            mobs[i].hp -= player.atk; // Le mob perd de la vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
                         }
                     }
-                }
-            }
-            else if(quiATK == 0){ //Le mob commence à attaquer
-                srand(time(NULL));
-                int coupEsquive = rand() % 4; //25% chance d'esquiver le coup
-                printf("Le %s commence à attaquer !\n", mob.name);
-                if(coupEsquive == 0){
-                    mob.atk = mob.atk / 2;
-                    player.hp -= mob.atk;
-                    quiATK = 1;
-                    printf("Vous avez esquivé le coup du %s, il vous reste %d pv", mob.name, player.hp);
+                    
+                    if(map[mobs[i].posY - 1][mobs[i].posX].crossable){
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                        mobs[i].posY --;
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                    }
+                    
+                    if(mobs[i].hp <= 0){
+                        printf("Le mob %d est mort", i);
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                        
+                        for(int j = i; j<nbMob; j++){
+                            mobs[j] = mobs[j+1];
+                            nbMob--;
+                        }
+                    }
                 }
                 else{
-                    player.hp -= mob.atk;
-                    quiATK = 1;
-                    printf("Un %s vous a touché, il vous reste %d pv", mob.name, player.hp);
-                }
-            }
-        }
-        else if(c == '2'){
-            system("clear");
-            displayInventory();
-            for(int i=0; i<32; i++){
-                if(player.inventory[i].id == 2 || player.inventory[i].id == 4){
-                    printf("Voulez-vous manger pour régénérer votre vie ?\n o: Oui\n n: Non (revenir au menu combat)\n");
-                    while(c != 'o' && c != 'n'){
-                        scanf("%s", &c);
-                    }
-                    if(c == 'o'){
-                        if(player.inventory[i].id == 2){
-                            player.hp += 5;
-                            player.inventory[i].id = NO_ITEM_ID;
-                            strcpy(player.inventory[i].name, "");
+                    if(critique == 0){ // Si le mob fait un coup critique
+                        if(esquive == 0){ // Si le joueur esquive le coup critique
+                            printf("Vous esquivez !\n");
                         }
-                        else if(player.inventory[i].id == 4){
-                            player.hp += 10;
-                            player.inventory[i].id = NO_ITEM_ID;
-                            strcpy(player.inventory[i].name, "");
+                        else{
+                            player.hp -= mobs[i].atk * 2; // Le joueur perd 2 fois plus de vie
+                            printf("Il vous reste %d hp !\n", player.hp);
                         }
                     }
-                    else if(c == 'n'){
-                        system("clear");
-                        printf("Vous revenez au menu combat\n\n");
+                    else{
+                        if(esquive == 0){ // Si le joueur esquive le coup
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk; // Le joueur perd de la vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+
+                    if(player.hp <= 0){
+                        printf("\n\nVous êtes mort !\n");
+                        printf("Le jeu va s'arréter dans 5 secondes...\n");
+                        sleep(5);
+                        exit(0);
                     }
                 }
             }
         }
-        else if(c == '3'){
-            printf("Fuir le duel vous enlève 5 pv, êtes-vous sur de vouloir faire ça ?\n o: oui\n n: Non (revenir au menu combat)\n");
-            while(c != 'o' && c != 'n'){
-                scanf("%s", &c);
+        else if(map[mobs[i].posY - 1][mobs[i].posX].playerOn){ // Le mob est 1 case en dessous du joueur
+            if(player.hp > 0 && mobs[i].hp > 0){
+                if(c == 32){
+                    if(critique == 0){ // Si le joueur fait un coup critique
+                        if(esquive == 0){ // Si le mob esquive le coup critique
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk * 2; // Le mob perd 2 fois plus de vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le mob esquive le coup
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk; // Le mob perd de la vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+
+                    if(map[mobs[i].posY + 1][mobs[i].posX].crossable){
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                        mobs[i].posY ++;
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                    }
+                    
+                    if(mobs[i].hp <= 0){
+                        printf("Le mob %d est mort", i);
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+
+                        for(int j = i; j<nbMob; j++){
+                            mobs[j] = mobs[j+1];
+                            nbMob--;
+                        }
+                    }
+                }
+                else{
+                    if(critique == 0){ // Si le mob fait un coup critique
+                        if(esquive == 0){ // Si le joueur esquive le coup critique
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk * 2; // Le joueur perd 2 fois plus de vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le joueur esquive le coup
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk; // Le joueur perd de la vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+
+                    if(player.hp <= 0){
+                        printf("\n\nVous êtes mort !\n");
+                        printf("Le jeu va s'arréter dans 5 secondes...\n");
+                        sleep(5);
+                        exit(0);
+                    }
+                }
             }
-            if(c == 'o'){
-                system("clear");
-                mob.hp = 0;
-                player.hp -= 5;
+        }
+        else if(map[mobs[i].posY][mobs[i].posX - 1].playerOn){ // Le mob est 1 case à droite du joueur
+            if(player.hp > 0 && mobs[i].hp > 0){
+                if(c == 32){
+                    if(critique == 0){ // Si le joueur fait un coup critique
+                        if(esquive == 0){ // Si le mob esquive le coup critique
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk * 2; // Le mob perd 2 fois plus de vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le mob esquive le coup
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk; // Le mob perd de la vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+                    
+                    if(map[mobs[i].posY][mobs[i].posX + 1].crossable){
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                        mobs[i].posX ++;
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                    }
+                    
+                    if(mobs[i].hp <= 0){
+                        printf("Le mob %d est mort", i);
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+
+                        for(int j = i; j<nbMob; j++){
+                            mobs[j] = mobs[j+1];
+                            nbMob--;
+                        }
+                    }
+                }
+                else{
+                    if(critique == 0){ // Si le mob fait un coup critique
+                        if(esquive == 0){ // Si le joueur esquive le coup critique
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk * 2; // Le joueur perd 2 fois plus de vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le joueur esquive le coup
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk; // Le joueur perd de la vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+
+                    if(player.hp <= 0){
+                        printf("\n\nVous êtes mort !\n");
+                        printf("Le jeu va s'arréter dans 5 secondes...\n");
+                        sleep(5);
+                        exit(0);
+                    }
+                }
             }
-            else if(c == 'n'){
-                printf("Vous revenez au menu combat\n\n");
+        }
+        else if(map[mobs[i].posY][mobs[i].posX + 1].playerOn){ // Le mob est 1 case à gauche du joueur
+            if(player.hp > 0 && mobs[i].hp > 0){
+                if(c == 32){
+                    if(critique == 0){ // Si le joueur fait un coup critique
+                        if(esquive == 0){ // Si le mob esquive le coup critique
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk * 2; // Le mob perd 2 fois plus de vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le mob esquive le coup
+                            printf("Le mob esquive !\n");
+                        }
+                        else{
+                            mobs[i].hp -= player.atk; // Le mob perd de la vie
+                            printf("Il reste %d points de vie au mob !\n", mobs[i].hp);
+                        }
+                    }
+                    
+                    if(map[mobs[i].posY][mobs[i].posX - 1].crossable){
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+                        mobs[i].posX --;
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 1;
+                    }
+
+                    if(mobs[i].hp <= 0){
+                        printf("Le mob %d est mort", i);
+                        map[mobs[i].posY][mobs[i].posX].mobOn = 0;
+
+                        for(int j = i; j<nbMob; j++){
+                            mobs[j] = mobs[j+1];
+                            nbMob--;
+                        }
+                    }
+                }
+                else{
+                    if(critique == 0){ // Si le mob fait un coup critique
+                        if(esquive == 0){ // Si le joueur esquive le coup critique
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk * 2; // Le joueur perd 2 fois plus de vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+                    else{
+                        if(esquive == 0){ // Si le joueur esquive le coup
+                            printf("Vous esquivez !\n");
+                        }
+                        else{
+                            player.hp -= mobs[i].atk; // Le joueur perd de la vie
+                            printf("Il vous reste %d hp !\n", player.hp);
+                        }
+                    }
+
+                    if(player.hp <= 0){
+                        printf("\n\nVous êtes mort !\n");
+                        printf("Le jeu va s'arréter dans 5 secondes...\n");
+                        sleep(5);
+                        exit(0);
+                    }
+                }
             }
         }
     }
-    
 }
 
 Mob getMob(int id){

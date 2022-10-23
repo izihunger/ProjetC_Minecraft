@@ -8,5 +8,6 @@
         "map.h": "c",
         "stdio.h": "c",
         "mob.h": "c"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
