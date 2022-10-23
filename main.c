@@ -430,7 +430,7 @@ void game(){
 
         printf("abc\r\n");
         moveMob(game.map, getPlayer(), game.size);
-        fight(game.map, getPlayer(), c);
+        fight(game.map, game.size,getPlayer(), c);
         printf("cba\r\n");
     }
     mode_raw(0);

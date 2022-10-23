@@ -15,7 +15,7 @@ extern int nbMob;
 
 void spawnMob(Bloc ** map, int size);
 void moveMob(Bloc ** map, Player player, int size);
-void fight(Bloc ** map, Player player, char c);
+void fight(Bloc ** map, int size, Player player, char c);
 Mob getMob(int id);
 void setMob(int id, Mob mob);
 void mallocMob(int size);
