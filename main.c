@@ -141,9 +141,6 @@ Bloc ** loadMap(char name[20], int * mapsize){
     }
     *pnbchests = '\0';
     nbChest = atoi(nbchests);
-    printf("En-tete réussi\r\n");
-    /******************************** jusqu'a là on est bon !!! ***********************************/
-
     j = 0;
     Bloc ** map = createGrid(size);
     Bloc * liste = (Bloc*) malloc(size*size*sizeof(Bloc));
@@ -209,12 +206,9 @@ Bloc ** loadMap(char name[20], int * mapsize){
             map[i][j].mobOn = liste[indexe].mobOn;
             map[i][j].vision = liste[indexe].vision;
             strcpy(map[i][j].display, liste[indexe].display);
-            //printf("%d, %d, %d, %d\n", map[i][j].crossable, map[i][j].playerOn, map[i][j].mobOn, map[i][j].chest);
             indexe++;
         }
-        printf("\n");
     }
-    printf("Map réussi\r\n");
     j = 0;
     i = 0;
     char hp[255], atk[255], posX[255], posY[255];
@@ -226,9 +220,7 @@ Bloc ** loadMap(char name[20], int * mapsize){
             *pposY = '\0';
             m.posY = atoi(posY);
             printf("%s, %d, %d, %d, %d\r\n", m.name, m.hp, m.atk, m.posX, m.posY);
-            printf("oui\n"),
             setMob(i, m);
-            printf("set mob effectue\n");
             j = 0;
             pposY = posY;
             i++;
@@ -282,7 +274,6 @@ Bloc ** loadMap(char name[20], int * mapsize){
             }
         }
     }
-    printf("Mob réussi\r\n");
     j = 0;
     i = 0;
     char id[255];
@@ -362,7 +353,6 @@ Bloc ** loadMap(char name[20], int * mapsize){
             }
         }
     }
-    printf("Chest réussi\r\n");
     fclose(file);
     return map;
 }
@@ -371,6 +361,7 @@ Bloc ** loadMap(char name[20], int * mapsize){
 void game(){
     srand(time(NULL));
     gameStatut game;
+    int play = 1;
     int value = displayStartMenu();
     if(value == 1){
         printf("Entrez la taille de votre map(cette valeur definira la largeur et la longueur de la map) : ");
@@ -393,19 +384,15 @@ void game(){
                 if(game.map[i][j].playerOn == 1) setPos(j, i);
             }
         }
-        printf("joueur trouvé\n");
     }
     else if(value == 3){
         printf("Le jeu va s'arréter dans 5 secondes...\n");
         sleep(5);
-        exit(0);
+        play = 0;
     }
     mode_raw(1);
-    int play = 1;
     char c;
     while(play){
-        displayMap(game.map, game.size);
-        displayCommand();
         c = getchar();
         if(c == 'e') play = 0;
         else if(c == 'm') {
@@ -418,20 +405,28 @@ void game(){
             displayInventory();
             mode_raw(1);
         }
+        else if(c == 'r'){
+            mode_raw(0);
+            manger();
+            mode_raw(1);
+        }
         else if(c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 't'){
             movePlayer(game.map,game.size, c);
-            if(game.map[getPlayer().posY][getPlayer().posX].chest){
-                mode_raw(0);
-                printf("Chest\r\n");                
+            if(game.map[player.posY][player.posX].chest){
+                mode_raw(0);               
                 openChest(game.map);
                 mode_raw(1);
             }
         }
-
-        printf("abc\r\n");
-        moveMob(game.map, getPlayer(), game.size);
-        fight(game.map, game.size,getPlayer(), c);
-        printf("cba\r\n");
+        moveMob(game.map, game.size);
+        displayMap(game.map, game.size);
+        mode_raw(0); 
+        if(!fight(game.map, game.size)){
+            play = 0;
+        }
+        mode_raw(1); 
+        displayMap(game.map, game.size);
+        displayCommand(player.hp);
     }
     mode_raw(0);
     free(game.map);

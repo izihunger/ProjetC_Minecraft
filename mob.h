@@ -14,8 +14,10 @@ typedef struct Mob {
 extern int nbMob;
 
 void spawnMob(Bloc ** map, int size);
-void moveMob(Bloc ** map, Player player, int size);
-void fight(Bloc ** map, int size, Player player, char c);
+void moveMob(Bloc ** map, int size);
+int critique();
+int esquive();
+int fight(Bloc ** map, int size);
 Mob getMob(int id);
 void setMob(int id, Mob mob);
 void mallocMob(int size);
