@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-Player player = {"default", 0, 50, 5, 0, 0, 0};
+Player player = {"default", 0, 50, 0, 5, 0, 0, 0};
 
 // Fonction to spawn the player
 void spawnPlayer(Bloc ** map,int size){
@@ -361,4 +361,26 @@ void displayInventory(){
     char fin;
     printf("Appuyer sur entrée pour reafficher la map...");
     scanf("%c", &fin);
+}
+
+void manger(){
+    printf("\r\n\r\nVous pouvez mangez :\r\n\n"); 
+    int manger = 0;   
+    for (int i = 0; i < player.nbItems; i++){
+        if(player.inventory[i].id == 1 || player.inventory[i].id == 2 || player.inventory[i].id == 4){
+            manger = 1;
+            printf("- %s (Numero %d)\r\n", player.inventory[i].name, i);
+        }
+    }
+    if(manger){
+        printf("\r\nEntrez le numéro de la nourriture que vous souhaitez manger : "); 
+        int choice;
+        scanf("%d", &choice);
+        for (int i = player.nbItems - 1; i > choice; i--){
+            player.inventory[i-1] = player.inventory[i];
+        }
+        player.nbItems --;
+        player.hp += 10;
+    }
+    else printf("\r\nVous n'avez pas de nourriture dans votre inventaire !\r\n"); 
 }

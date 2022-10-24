@@ -38,5 +38,5 @@ Bloc** createGrid(int size);
 Bloc chooseBloc(float perlinValue);
 Bloc** generateMap(int size);
 void displayMap(Bloc ** map, int size);
-void displayCommand();
+void displayCommand(int hp);
 void fillChest(Chest * chest);

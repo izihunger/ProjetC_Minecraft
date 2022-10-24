@@ -11,6 +11,7 @@ typedef struct Player {
     char * name;
     int level;
     int hp;
+    int res;
     int atk;
     int posX;
     int posY;
@@ -18,6 +19,7 @@ typedef struct Player {
     Item inventory[nbItemMax];
 } Player;
 
+extern Player player;
 // Structure : END
 
 // Function : START
@@ -31,3 +33,4 @@ void actionBlocPlayer(Bloc ** map, int size);
 Player getPlayer();
 void openChest(Bloc ** map);
 void displayInventory();
+void manger();

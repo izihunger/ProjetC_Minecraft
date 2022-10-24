@@ -68,7 +68,7 @@ Bloc** generateMap(int size){
 
 // Function to display the map with blocs / player / chests / mobs
 void displayMap(Bloc ** map, int size){
-    //system("clear");
+    system("clear");
     printf("-");
     for(int i = 0; i < size+1; i++) printf("--");
     printf("\r\n");
@@ -91,18 +91,19 @@ void displayMap(Bloc ** map, int size){
 }
 
 // Function to display the command
-void displayCommand(){
-    printf("\r\nCommandes :\r\n\
+void displayCommand(int hp){
+    printf("\r\nIl vous reste %d hp.\r\n\r\n\
+            Commandes :\r\n\
             \'z\' pour monter\r\n\
             \'s\' pour descendre\r\n\
             \'q\' pour aller a gauche\r\n\
             \'d\' pour aller a gauche\r\n\
             \'i\' pour voir votre inventaire\r\n\
+            \'r\' pour manger\r\n\
             \'t\' pour casser un arbre\r\n\
-            \'space bar\' pour vous battre\r\n\
             \'m\' pour entrez dans le menu\r\n\
             \'e\' pour exit le jeu\r\n\
-            \r\nEntrez votre commande : \r");
+            \r\nEntrez votre commande : \r", hp); // 'space bar\' pour vous battre
 }
 
 // Function to fill the chests with items
